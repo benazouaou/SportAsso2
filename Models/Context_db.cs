@@ -8,7 +8,7 @@ namespace SportAsso.Models
     public partial class Context_db : DbContext
     {
         public Context_db()
-            : base("name=SportAsso")
+            : base("name=SportAsso2")
         {
         }
 
