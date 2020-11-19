@@ -43,11 +43,15 @@ namespace SportAsso.Controllers
 
             using (var context = new Context_db())
             {
-
+           
+                Section section = context.Section
+                    .Where(c => c.Id_Section == id2)
+                    .FirstOrDefault();
                 List<Creneau> creneaux = context.Creneau
                     .Where(c => c.Section_Id_Section == id2)
                     .ToList();
-                ViewBag.Section = id2;
+                ViewBag.SectionId = id2;
+                ViewBag.Section = section;
                 ViewBag.Discipline = id;
                 ViewBag.Creneaux = creneaux;
             }
