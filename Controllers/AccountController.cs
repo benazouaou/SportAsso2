@@ -20,7 +20,6 @@ namespace SportAsso.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-
             List<string> list = new List<string>();
             list.Add("female");
             list.Add("male");
@@ -34,7 +33,6 @@ namespace SportAsso.Controllers
         {
             try
             {
-
                 List<string> list = new List<string>();
                 list.Add("female");
                 list.Add("male");
@@ -43,6 +41,7 @@ namespace SportAsso.Controllers
                 Personne pr = db.Personne.Where(x => x.Id_Personne == p.Id_Personne).SingleOrDefault();
                 Session["id"] = pr.Id_Personne;
 
+                Role rA = db.Role.Where(x => x.Id_Role == 1).SingleOrDefault();
 
                 pr.Id_Personne = p.Id_Personne;
                 pr.Nom = p.Nom;
@@ -55,10 +54,9 @@ namespace SportAsso.Controllers
                 pr.Confirm_Mot_Passe = p.Confirm_Mot_Passe;
 
                 db.Personne.Add(pr);
+
+                pr.Role.Add(rA);
                 db.SaveChanges();
-
-
-
 
                 return RedirectToAction("ApresInscription");
 
@@ -66,16 +64,15 @@ namespace SportAsso.Controllers
             catch (Exception)
             {
 
-
-
                 //throw
 
             }
 
-
-
             return View();
         } // action method end....
+
+
+        
 
 
 
