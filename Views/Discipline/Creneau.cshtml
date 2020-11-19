@@ -6,6 +6,8 @@
 
 <div class="row">
     <div class="col-md-12">
+        <span><a href="/">home></a><a href="/Discipline">Disciplines></a><a href="/Discipline/Section/@ViewBag.Discipline">@ViewBag.Discipline></a><a href="/Discipline/Creneau/@ViewBag.Discipline/@ViewBag.SectionId">Creneau</a></span>
+
         <h2>Creneaux de la section @ViewBag.Section.Nom de la discipline @ViewBag.Discipline</h2>
         <table cellpadding="20">
             <tr>
@@ -32,7 +34,6 @@
                     ViewBag.Encadrant = encadrant;
                     ViewBag.Lieu = lieu;
                 }
-                
         <tr>
             <td>@creneau.Jour &nbsp &nbsp</td>
             <td>@creneau.Heure &nbsp &nbsp</td>
