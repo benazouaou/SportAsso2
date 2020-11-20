@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Creneau";
+   
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <span><a href="/">home></a><a href="/Discipline">Disciplines></a><a href="/Discipline/Section/@ViewBag.Discipline">@ViewBag.Discipline></a><a href="/Discipline/Creneau/@ViewBag.Discipline/@ViewBag.SectionId">Creneau</a></span>
+
+        <h2>Creneaux de la section @ViewBag.Section.Nom de la discipline @ViewBag.Discipline</h2>
+        <table cellpadding="20">
+            <tr>
+                <th>Jour &nbsp &nbsp</th>
+                <th>Heure &nbsp &nbsp</th>
+                <th>Lieu &nbsp &nbsp</th>
+                <th>Adresse &nbsp &nbsp</th>
+                <th>Encadrant &nbsp &nbsp</th>
+                <th>Places disponibles &nbsp &nbsp</th>
+                <th>Places maximum &nbsp &nbsp</th>
+
+            </tr>
+            @foreach (var creneau in ViewBag.Creneaux as List<SportAsso.Models.Creneau>)
+            {
+
+                using (var context = new SportAsso.Models.Context_db())
+                {
+                    var encadrant = context.Personne
+                        .Where(p => p.Id_Personne == creneau.Encadrant)
+                        .FirstOrDefault();
+                    var lieu = context.Lieu
+                        .Where(l => l.Id_Lieu == creneau.Lieu_Id_Lieu)
+                        .FirstOrDefault();
+                    ViewBag.Encadrant = encadrant;
+                    ViewBag.Lieu = lieu;
+                }
+        <tr>
+            <td>@creneau.Jour &nbsp &nbsp</td>
+            <td>@creneau.Heure &nbsp &nbsp</td>
+            <td>@ViewBag.Lieu.Nom &nbsp &nbsp</td>
+            <td>@ViewBag.Lieu.Adresse &nbsp &nbsp</td>
+            <td>@ViewBag.Encadrant.Prenom @ViewBag.Encadrant.Nom &nbsp &nbsp</td>
+            <td>@creneau.Nombre_Places_Dispo &nbsp &nbsp</td>
+            <td>@creneau.Nombre_Places_Max &nbsp &nbsp</td>
+        </tr>
+            }
+        </table>
+    </div>
+</div>
+

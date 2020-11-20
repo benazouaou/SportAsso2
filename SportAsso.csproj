@@ -128,9 +128,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\BundleConfig2.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DisciplineController.cs" />
     <Compile Include="Controllers\EncadrantController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -192,11 +194,15 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\UserPannel.cshtml" />
+    <Content Include="Views\Discipline\Index.cshtml" />
+    <Content Include="Views\Discipline\Section.cshtml" />
+    <Content Include="Views\Discipline\Creneau.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Encadrant\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

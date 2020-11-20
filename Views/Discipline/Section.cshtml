@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Section";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <span><a href="/">home></a><a href="/Discipline">Disciplines></a><a href="/Discipline/Section/@ViewBag.Discipline">@ViewBag.Discipline</a></span>
+        <h2>Sections</h2>
+        <table>
+            <tr>
+                <th>Nom &nbsp &nbsp </th>
+                <th>Prix &nbsp &nbsp</th>
+            </tr>
+            @foreach (var sectio in ViewBag.Sections as List<SportAsso.Models.Section>)
+            {
+                <tr>
+                    <td><a href="/Discipline/Creneau/@ViewBag.Discipline/@sectio.Id_Section">@sectio.Nom &nbsp &nbsp</a></td>
+                    <td>@sectio.Prix &nbsp &nbsp</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

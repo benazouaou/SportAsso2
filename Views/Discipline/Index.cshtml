@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <span><a href="/">home></a><a href="/Discipline">Disciplines></a></span>
+
+
+        <h2>Disciplines</h2>
+        <ul>
+            @foreach (var discipline in ViewBag.Disciplines as List<SportAsso.Models.Discipline>)
+            {
+                <li><a href="/Discipline/Section/@discipline.Nom_Discipline">@discipline.Nom_Discipline</a></li>
+            }
+        </ul>
+    </div>
+</div>
+
