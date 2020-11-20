@@ -12,82 +12,59 @@ namespace SportAsso.Controllers
 
         Context_db db = new Context_db();
         // GET: Account
-        public ActionResult Index()
-        {
-            return View();
-        }
+       
+
 
         [HttpGet]
-        public ActionResult Register()
+        public ActionResult Register( )
         {
             List<string> list = new List<string>();
             list.Add("female");
             list.Add("male");
-
             ViewBag.list = new SelectList(list);
-            return View();
+
+            Personne p = new Personne();
+
+            return View(p);
         }
+
+
+
 
         [HttpPost]
         public ActionResult Register(Personne p)
         {
-            try
+            List<string> list = new List<string>();
+            list.Add("female");
+            list.Add("male");
+            ViewBag.list = new SelectList(list);
+
+
+            if (db.Personne.Any(x => x.E_mail == p.E_mail))
             {
-                List<string> list = new List<string>();
-                list.Add("female");
-                list.Add("male");
-
-                ViewBag.list = new SelectList(list);
-                Personne pr = db.Personne.Where(x => x.Id_Personne == p.Id_Personne).SingleOrDefault();
-                Session["id"] = pr.Id_Personne;
-
+                ViewBag.DuplicateMessage = "Adresse éléctronique existe déja.";
+                return View("Register", p);
+            }
+            else
+            {
+                db.Personne.Add(p);
                 Role rA = db.Role.Where(x => x.Id_Role == 1).SingleOrDefault();
-
-                pr.Id_Personne = p.Id_Personne;
-                pr.Nom = p.Nom;
-                pr.Prenom = p.Prenom;
-                pr.Date_Naissance = p.Date_Naissance;
-                pr.E_mail = p.E_mail;
-                pr.Num_Telephone = p.Num_Telephone;
-                pr.Sexe = p.Sexe;
-                pr.Mot_de_Passe = p.Mot_de_Passe;
-                pr.Confirm_Mot_Passe = p.Confirm_Mot_Passe;
-
-                db.Personne.Add(pr);
-
-                pr.Role.Add(rA);
+                p.Role.Add(rA);
                 db.SaveChanges();
 
-                return RedirectToAction("ApresInscription");
-
-            }
-            catch (Exception)
-            {
-
-                //throw
-
             }
 
-            return View();
-        } // action method end....
+            ModelState.Clear();
+            ViewBag.SucessMessage = "Votre compte a était créé avec succés.";
+            return View("Register", new Personne());
 
-
-        
-
-
-
-        public ActionResult ApresInscription()
-        {
-            if (Session["id"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            return View();
         }
 
 
-        [HttpGet]
+
+
+
+            [HttpGet]
         public ActionResult Login()
         {
 
