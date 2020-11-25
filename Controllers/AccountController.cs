@@ -111,8 +111,21 @@ namespace SportAsso.Controllers
             {
                 return RedirectToAction("Login");
             }
+            int id = (int)Session["P_id"];
+            using (var context = new Context_db())
+            {
+                List<Role> roles = context.Personne
+                    .Where(p => p.Id_Personne == id)
+                    .SelectMany(p => p.Role)
+                    .ToList();
+                ViewBag.Roles = roles;
+                ViewBag.Id = id;
+            }
             return View();
+
+
         }
+
 
 
     }
