@@ -1,75 +1,36 @@
-﻿<!DOCTYPE html>
-<head>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</head>
-<body>
-    <h2>Espace utilisateur</h2>
+﻿@{ 
+    Layout = "~/Views/Shared/LayoutUserPannel.cshtml";
+}
 
-    <nav class="nav  flex-column" style="width:190px; padding:15px; background-color:lightgray">
+<h1>Vos informations personnelles</h1>
 
-        <!--responsive
-             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#responsive">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<table>
+    <tr>
+        <td>Nom : &nbsp &nbsp</td>
+        <td>@ViewBag.Personne.Nom &nbsp &nbsp</td>
+    </tr>
+    <tr>
+        <td>Prenom : &nbsp &nbsp</td>
+        <td>@ViewBag.Personne.Prenom &nbsp &nbsp</td>
 
-            -->
-        <!-- les liens du menu-->
-        <div class="navbar">
-            <div>
-                <a role="button">Mes infos personnelles</a>
-            </div>
-
-            <div class="dropright">
-                <a class="dropdown-toggle" role="button" id="deroulanta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mes pré inscriptions</a>
-                <div class="dropdown-menu" style="background-color:lightgray" aria-labelledby="deroulanta">
-                    <ul>
-                        @{
-                            foreach (var dossier in ViewBag.Dossiers as List<SportAsso.Models.Dossier>)
-                            {
-                                
-                                <li>
-                                    <a class="dropdown-item">@dossier.Id_Dossier</a>
-                                </li>
-                            }
-                        }
-
-
-                        <li>
-                            <a class="dropdown-item">btest</a>
-
-                        </li>
-                        <li>
-                            <a class="dropdown-item">btest2</a>
-
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="dropdown">
-                <a class="dropdown-toggle" role="button" id="deroulanta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mes inscriptions</a>
-                <div class="dropdown-menu" style="background-color:lightgray" aria-labelledby="deroulanta">
-                    <ul>
-                        @foreach (var creneau in ViewBag.Creneaux as List<SportAsso.Models.Creneau>)
-                        {
-                            <li>
-                                <a class="dropdown-item">@creneau.Id_Creneau</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <span>Mes rôles</span>
-     @foreach (var role in ViewBag.Roles as List<SportAsso.Models.Role>)
-     {
-         <div>@role.Nom_Role</div>
-     }
-       
-</body>
+    </tr>
+    <tr>
+        <td>Date de naissance : &nbsp &nbsp</td>
+        <td>@ViewBag.Personne.Date_Naissance &nbsp &nbsp</td>
+    </tr>
+    <tr>
+        <td>Email : &nbsp &nbsp</td>
+        <td>@ViewBag.Personne.E_mail &nbsp &nbsp</td>
+        <td><button>Modifier</button></td>
+    </tr>
+    <tr>
+        <td>Numéro de téléphone : &nbsp &nbsp</td>
+        <td>@ViewBag.Personne.Num_Telephone &nbsp &nbsp</td>
+        <td><button>Modifier</button></td>
+    </tr>
+    <tr>
+        <td>Mot de passe : &nbsp &nbsp</td>
+        <td>******** &nbsp &nbsp</td>
+        <td><button>Modifier</button></td>
+    </tr>
+</table>
