@@ -12,81 +12,109 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h2>Espace utilisateur</h2>
 
-    <nav class="nav  flex-column" style="width:190px; padding:15px; background-color:lightgray">
+    @using (var context = new SportAsso.Models.Context_db())
+    {
+    int id = (int)Session["P_id"];
+    List<SportAsso.Models.Role>
+        roles = context.Personne
+        .Where(p => p.Id_Personne == id)
+        .SelectMany(p => p.Role)
+        .ToList();
+        ViewBag.Roles = roles;
 
-        <!--responsive
-             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#responsive">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        List<SportAsso.Models.Creneau>
+            creneaux = context.Personne
+            .Where(p => p.Id_Personne == id)
+            .SelectMany(p => p.Creneau)
+            .ToList();
+            ViewBag.Creneaux = creneaux;
 
-            -->
-        <!-- les liens du menu-->
-        <div class="navbar">
-            <div>
-                <a role="button" href="/Account/UserPannel">Mes infos personnelles</a>
-            </div>
-            <!--Les pré inscriptions-->
-            <div class="dropright">
-                <a class="dropdown-toggle" role="button" id="deroulanta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mes pré inscriptions</a>
-                <div class="dropdown-menu" style="background-color:lightgray" aria-labelledby="deroulanta">
-                    <ul>
-                        @{
-                            foreach (var dossier in ViewBag.Dossiers as List<SportAsso.Models.Dossier>)
+            List<SportAsso.Models.Dossier>
+                dossier = context.Dossier
+                .Where(d => d.Personne_Id_Personne == id)
+                .ToList();
+                ViewBag.Dossiers = dossier;
+
+                SportAsso.Models.Personne personne = context.Personne
+                .Where(p => p.Id_Personne == id)
+                .FirstOrDefault();
+                ViewBag.Personne = personne;
+                }
+                <br/>
+                <nav class="nav  flex-column" style="width:190px; padding:15px; background-color:lightgray">
+
+                    <!--responsive
+                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#responsive">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                        -->
+                    <!-- les liens du menu-->
+                    <div class="navbar">
+                        <div>
+                            <a role="button" href="/Account/UserPannel">Mes infos personnelles</a>
+                        </div>
+                        <!--Les pré inscriptions-->
+                        <div class="dropright">
+                            <a class="dropdown-toggle" role="button" id="deroulanta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mes pré inscriptions</a>
+                            <div class="dropdown-menu" style="background-color:lightgray" aria-labelledby="deroulanta">
+                                <ul>
+                                    @{
+                                        foreach (var dossier in ViewBag.Dossiers as List<SportAsso.Models.Dossier>)
+                                        {
+
+                                            <li>
+                                                <a class="dropdown-item" href="/Account/Preinscription">@dossier.Id_Dossier</a>
+                                            </li>
+                                        }
+                                    }
+                                    <li>
+                                        <a class="dropdown-item" href="/Account/Preinscription">test</a>
+
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <!--Les inscriptions-->
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" role="button" id="deroulanta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mes inscriptions</a>
+                            <div class="dropdown-menu" style="background-color:lightgray" aria-labelledby="deroulanta">
+                                <ul>
+                                    @foreach (var creneau in ViewBag.Creneaux as List<SportAsso.Models.Creneau>)
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" href="/Account/Inscription">@creneau.Id_Creneau</a>
+                                        </li>
+                                    }
+                                    <li>
+                                        <a class="dropdown-item" href="/Account/Inscription">test</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--Les cours des encadrants-->
+                        @foreach (var role in ViewBag.Roles as List<SportAsso.Models.Role>)
+                        {
+                            if (@role.Nom_Role == "encadrant")
                             {
-
-                                <li>
-                                    <a class="dropdown-item" href="/Account/Preinscription">@dossier.Id_Dossier</a>
-                                </li>
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" role="button" id="deroulanta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mes cours</a>
+                                    <div class="dropdown-menu" style="background-color:lightgray" aria-labelledby="deroulanta">
+                                        <ul>
+                                            <li>
+                                                <a class="dropdown-item" href="/Account/Cours">test</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             }
                         }
-                        <li>
-                            <a class="dropdown-item" href="/Account/Preinscription">test</a>
 
-                        </li>
-
-                    </ul>
-                </div>
-            </div>
-            <!--Les inscriptions-->
-            <div class="dropdown">
-                <a class="dropdown-toggle" role="button" id="deroulanta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mes inscriptions</a>
-                <div class="dropdown-menu" style="background-color:lightgray" aria-labelledby="deroulanta">
-                    <ul>
-                        @foreach (var creneau in ViewBag.Creneaux as List<SportAsso.Models.Creneau>)
-                        {
-                            <li>
-                                <a class="dropdown-item" href="/Account/Inscription">@creneau.Id_Creneau</a>
-                            </li>
-                        }
-                        <li>
-                            <a class="dropdown-item" href="/Account/Inscription">test</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!--Les cours des encadrants-->
-            @foreach (var role in ViewBag.Roles as List<SportAsso.Models.Role>)
-            {
-                if (@role.Nom_Role == "encadrant")
-                {
-                    <div class="dropdown">
-                        <a class="dropdown-toggle" role="button" id="deroulanta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mes cours</a>
-                        <div class="dropdown-menu" style="background-color:lightgray" aria-labelledby="deroulanta">
-                            <ul>
-                                <li>
-                                    <a class="dropdown-item" href="/Account/Cours">test</a>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
-                }
-            }
+                </nav>
 
-        </div>
-    </nav>
+                @RenderBody();
 
-        @RenderBody();
-
-    </body>
+</body>

@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "~/Views/Shared/LayoutUserPannel.cshtml";
+}
+
+@{
+    ViewBag.Title = "ModifierMdp";
+}
+
+
+
+
+<div>
+    <form method="post" action="/GestionA/ModifierMdp">
+        <fieldset>
+            <legend>Modification de votre mot de passe :</legend>
+            <p>
+                <label>Votre ancien mot de passe :</label>
+                <input name="ancien" type="password" />
+                @if(ViewBag.Ancien != null)
+                {
+                    @ViewBag.Ancien
+                }
+            </p>
+            <p>
+                <label>Votre nouveau mot de passe :</label>
+                <input name="nouveau" type="password" />
+            </p>
+            <p>
+                <label>Confirmer votre nouveau mot de passe : </label>
+                <input name="nouveauConf" type="password" />
+                @if (ViewBag.Nouveau != null)
+                {
+                    @ViewBag.Nouveau
+                }
+            </p>
+            <p>
+                <input type="submit" value="envoyer" />
+            </p>
+        </fieldset>
+    </form>
+
+
+
+</div>

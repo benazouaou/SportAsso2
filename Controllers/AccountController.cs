@@ -108,91 +108,27 @@ namespace SportAsso.Controllers
             {
                 return RedirectToAction("Login");
             }
-            int id = (int)Session["P_id"];
-            using (var context = new Context_db())
+            using (var context = new SportAsso.Models.Context_db())
             {
-                List<Role> roles = context.Personne
-                    .Where(p => p.Id_Personne == id)
-                    .SelectMany(p => p.Role)
-                    .ToList();
-                ViewBag.Roles = roles;
-
-                List<Creneau> creneaux = context.Personne
-                    .Where(p => p.Id_Personne == id)
-                    .SelectMany(p => p.Creneau)
-                    .ToList();
-                ViewBag.Creneaux = creneaux;
-
-                List<Dossier> dossier = context.Dossier
-                        .Where(d => d.Personne_Id_Personne == id)
-                        .ToList();
-                ViewBag.Dossiers = dossier;
-
+                int id = (int)Session["P_id"];
                 Personne personne = context.Personne
-                    .Where(p => p.Id_Personne == id)
-                    .FirstOrDefault();
+                .Where(p => p.Id_Personne == id)
+                .FirstOrDefault();
                 ViewBag.Personne = personne;
             }
+
             return View();
         }
+    
 
         public ActionResult Inscription()
         {
-            int id = (int)Session["P_id"];
-            using (var context = new Context_db())
-            {
-                List<Role> roles = context.Personne
-                    .Where(p => p.Id_Personne == id)
-                    .SelectMany(p => p.Role)
-                    .ToList();
-                ViewBag.Roles = roles;
 
-                List<Creneau> creneaux = context.Personne
-                    .Where(p => p.Id_Personne == id)
-                    .SelectMany(p => p.Creneau)
-                    .ToList();
-                ViewBag.Creneaux = creneaux;
-
-                List<Dossier> dossier = context.Dossier
-                        .Where(d => d.Personne_Id_Personne == id)
-                        .ToList();
-                ViewBag.Dossiers = dossier;
-
-                Personne personne = context.Personne
-                    .Where(p => p.Id_Personne == id)
-                    .FirstOrDefault();
-                ViewBag.Personne = personne;
-            }
             return View();
         }
 
         public ActionResult Preinscription()
         {
-            int id = (int)Session["P_id"];
-            using (var context = new Context_db())
-            {
-                List<Role> roles = context.Personne
-                    .Where(p => p.Id_Personne == id)
-                    .SelectMany(p => p.Role)
-                    .ToList();
-                ViewBag.Roles = roles;
-
-                List<Creneau> creneaux = context.Personne
-                    .Where(p => p.Id_Personne == id)
-                    .SelectMany(p => p.Creneau)
-                    .ToList();
-                ViewBag.Creneaux = creneaux;
-
-                List<Dossier> dossier = context.Dossier
-                        .Where(d => d.Personne_Id_Personne == id)
-                        .ToList();
-                ViewBag.Dossiers = dossier;
-
-                Personne personne = context.Personne
-                    .Where(p => p.Id_Personne == id)
-                    .FirstOrDefault();
-                ViewBag.Personne = personne;
-            }
             return View();
         }
 
@@ -200,31 +136,6 @@ namespace SportAsso.Controllers
 
         public ActionResult Cours()
         {
-            int id = (int)Session["P_id"];
-            using (var context = new Context_db())
-            {
-                List<Role> roles = context.Personne
-                    .Where(p => p.Id_Personne == id)
-                    .SelectMany(p => p.Role)
-                    .ToList();
-                ViewBag.Roles = roles;
-
-                List<Creneau> creneaux = context.Personne
-                    .Where(p => p.Id_Personne == id)
-                    .SelectMany(p => p.Creneau)
-                    .ToList();
-                ViewBag.Creneaux = creneaux;
-
-                List<Dossier> dossier = context.Dossier
-                        .Where(d => d.Personne_Id_Personne == id)
-                        .ToList();
-                ViewBag.Dossiers = dossier;
-
-                Personne personne = context.Personne
-                    .Where(p => p.Id_Personne == id)
-                    .FirstOrDefault();
-                ViewBag.Personne = personne;
-            }
             return View();
         }
 

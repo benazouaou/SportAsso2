@@ -21,16 +21,28 @@
     <tr>
         <td>Email : &nbsp &nbsp</td>
         <td>@ViewBag.Personne.E_mail &nbsp &nbsp</td>
-        <td><button>Modifier</button></td>
+        <td>
+            <form action="/GestionA/ModifierMail">
+                <input type="submit" value="Modifer" />
+            </form>
+        </td>
     </tr>
     <tr>
         <td>Numéro de téléphone : &nbsp &nbsp</td>
         <td>@ViewBag.Personne.Num_Telephone &nbsp &nbsp</td>
-        <td><button>Modifier</button></td>
+        <td>
+            <form action="/GestionA/ModifierTel">
+                <input type="submit" value="Modifer" />
+            </form>
+        </td>
     </tr>
     <tr>
         <td>Mot de passe : &nbsp &nbsp</td>
         <td>******** &nbsp &nbsp</td>
-        <td><button>Modifier</button></td>
+        <td>
+            <form action="/GestionA/ModifierMdp">
+                <input type="submit" value="Modifer"/>
+            </form>
+        </td>
     </tr>
 </table>
