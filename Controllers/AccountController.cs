@@ -119,7 +119,17 @@ namespace SportAsso.Controllers
                     .SelectMany(p => p.Role)
                     .ToList();
                 ViewBag.Roles = roles;
-                ViewBag.Id = id;
+
+                List<Creneau> creneaux = context.Personne
+                    .Where(p => p.Id_Personne == id)
+                    .SelectMany(p => p.Creneau)
+                    .ToList();
+                ViewBag.Creneaux = creneaux;
+
+                List<Dossier> dossier = context.Dossier
+                        .Where(d => d.Personne_Id_Personne == id)
+                        .ToList();
+                ViewBag.Dossiers = dossier;
             }
             return View();
 
