@@ -199,6 +199,7 @@
     <Content Include="Views\Discipline\Creneau.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Encadrant\Index.cshtml" />
+    <Content Include="Views\Encadrant\Creneaux.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
