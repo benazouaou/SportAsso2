@@ -9,7 +9,7 @@ namespace SportAsso.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(SportAsso.Models.Context_db context)

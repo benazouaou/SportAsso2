@@ -143,9 +143,9 @@
     <Compile Include="Migrations\202011271302296_InitialCreate.Designer.cs">
       <DependentUpon>202011271302296_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202011271307555_ValidationDossier.cs" />
-    <Compile Include="Migrations\202011271307555_ValidationDossier.Designer.cs">
-      <DependentUpon>202011271307555_ValidationDossier.cs</DependentUpon>
+    <Compile Include="Migrations\202011271540524_ValidationDossier.cs" />
+    <Compile Include="Migrations\202011271540524_ValidationDossier.Designer.cs">
+      <DependentUpon>202011271540524_ValidationDossier.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Creneau.cs" />
@@ -234,8 +234,8 @@
     <EmbeddedResource Include="Migrations\202011271302296_InitialCreate.resx">
       <DependentUpon>202011271302296_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202011271307555_ValidationDossier.resx">
-      <DependentUpon>202011271307555_ValidationDossier.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202011271540524_ValidationDossier.resx">
+      <DependentUpon>202011271540524_ValidationDossier.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

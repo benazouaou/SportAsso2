@@ -13,12 +13,12 @@ namespace SportAsso.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202011271307555_ValidationDossier"; }
+            get { return "202011271540524_ValidationDossier"; }
         }
         
         string IMigrationMetadata.Source
         {
-            get { return null; }
+            get { return Resources.GetString("Source"); }
         }
         
         string IMigrationMetadata.Target

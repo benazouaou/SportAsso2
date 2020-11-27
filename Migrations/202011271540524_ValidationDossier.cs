@@ -7,7 +7,7 @@ namespace SportAsso.Migrations
     {
         public override void Up()
         {
-            AddColumn("Dossier", "Est_Valide", c => c.Boolean(nullable: false, defaultValue: false));
+            //AddColumn("Dossier", "Est_Valide", c => c.Boolean(nullable: false, defaultValue: false));
         }
         
         public override void Down()
