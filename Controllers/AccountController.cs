@@ -154,12 +154,12 @@ namespace SportAsso.Controllers
                     .Where(l => l.Id_Lieu == creneau.Lieu_Id_Lieu)
                     .FirstOrDefault();
                 ViewBag.Lieu = lieu;
-                /**List<Personne> personnes = context.Creneau
+                List<Personne> personnes = context.Creneau
                     .Where(c => c.Id_Creneau == id)
-                    .SelectMany(c => c.Personne)
+                    .SelectMany(c => c.Personne1)
                     .ToList();
                 ViewBag.Personnes = personnes;
-                **/
+                
             }
             return View();
         }
