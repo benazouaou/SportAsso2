@@ -24,6 +24,8 @@ namespace SportAsso.Models
 
         public int Section_Id_Section { get; set; }
 
+        public Boolean Est_Valide { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Document> Document { get; set; }
 
