@@ -119,21 +119,96 @@ namespace SportAsso.Controllers
 
             return View();
         }
-    
 
-        public ActionResult Inscription()
+        [HttpGet]
+        public ActionResult Inscription(int id)
         {
-
+            using(var context = new Context_db())
+            {
+                int Id = (int)Session["P_id"];
+                Dossier dossier = context.Dossier
+                    .Where(d => d.Id_Dossier == id)
+                    .FirstOrDefault();
+                ViewBag.Dossier = dossier;
+                Section section = context.Section
+                    .Where(s => s.Id_Section == dossier.Section_Id_Section)
+                    .FirstOrDefault();
+                ViewBag.Section = section;
+                Discipline discipline = context.Discipline
+                    .Where(d => d.Id_Discipline == section.Discipline_Id_Discipline)
+                    .FirstOrDefault();
+                ViewBag.Discipline = discipline;
+                //tous les creneaux auxquels est inscrit l'adhérent
+                List<Creneau> creneaux = context.Personne
+                    .Where(p => p.Id_Personne == Id)
+                    .SelectMany(p => p.Creneau1)
+                    .ToList();
+                foreach(Creneau creneau in creneaux as List<Creneau>)
+                {
+                    //le creneau de la section du dossier que l'utilisation consulte
+                    if(creneau.Section_Id_Section == section.Id_Section)
+                    {
+                        ViewBag.Creneau = creneau;
+                    }
+                }
+                Creneau cr = ViewBag.Creneau;
+                Lieu lieu = context.Lieu
+                    .Where(l => l.Id_Lieu == cr.Lieu_Id_Lieu)
+                    .FirstOrDefault();
+                ViewBag.Lieu = lieu;
+                Personne encadrant = context.Personne
+                    .Where(e => e.Id_Personne == cr.Encadrant)
+                    .FirstOrDefault();
+                ViewBag.Encadrant = encadrant;
+            }
             return View();
         }
-
-        public ActionResult Preinscription()
+        [HttpGet]
+        public ActionResult Preinscription(int id)
         {
+            using (var context = new Context_db())
+            {
+                int Id = (int)Session["P_id"];
+                Dossier dossier = context.Dossier
+                    .Where(d => d.Id_Dossier == id)
+                    .FirstOrDefault();
+                ViewBag.Dossier = dossier;
+                Section section = context.Section
+                    .Where(s => s.Id_Section == dossier.Section_Id_Section)
+                    .FirstOrDefault();
+                ViewBag.Section = section;
+                Discipline discipline = context.Discipline
+                    .Where(d => d.Id_Discipline == section.Discipline_Id_Discipline)
+                    .FirstOrDefault();
+                ViewBag.Discipline = discipline;
+                //tous les creneaux auxquels est inscrit l'adhérent
+                List<Creneau> creneaux = context.Personne
+                    .Where(p => p.Id_Personne == Id)
+                    .SelectMany(p => p.Creneau1)
+                    .ToList();
+                foreach (Creneau creneau in creneaux as List<Creneau>)
+                {
+                    //le creneau de la section du dossier que l'utilisation consulte
+                    if (creneau.Section_Id_Section == section.Id_Section)
+                    {
+                        ViewBag.Creneau = creneau;
+                    }
+                }
+                Creneau cr = ViewBag.Creneau;
+                Lieu lieu = context.Lieu
+                    .Where(l => l.Id_Lieu == cr.Lieu_Id_Lieu)
+                    .FirstOrDefault();
+                ViewBag.Lieu = lieu;
+                Personne encadrant = context.Personne
+                    .Where(e => e.Id_Personne == cr.Encadrant)
+                    .FirstOrDefault();
+                ViewBag.Encadrant = encadrant;
+            }
             return View();
         }
 
         //Gestion de la partie encadrant
-
+        [HttpGet]
         public ActionResult Cours(int id)
         {
             using(var context = new Context_db())

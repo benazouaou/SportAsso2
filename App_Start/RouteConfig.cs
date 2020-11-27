@@ -23,13 +23,12 @@ namespace SportAsso
             routes.MapRoute(
                name: "Account",
                url: "Account/{action}/{id}",
-               //id = discipline id2=section id3=creneau
+               //id = numéro du dossier en get 
                defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
 );
             routes.MapRoute(
               name: "GestionA",
               url: "GestionA/{action}/{id}",
-              //id = discipline id2=section id3=creneau
               defaults: new { controller = "GestionAdherent", action = "Index", id = UrlParameter.Optional }
 );
 
