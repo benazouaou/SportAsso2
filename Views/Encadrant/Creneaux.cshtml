@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Crenaux";
+}
+
+<div class="row">
+    <span><a href="/">home></a><a href="/Encadrant">Encadrants></a>
+                               <a href="/Encadrant/Creneaux/@ViewBag.Encadrant">@ViewBag.EncadrantNom @ViewBag.EncadrantPrenom</a></span>
+    <div class="col-md-12">
+        <h2>Creneaux de l'encadrant @ViewBag.EncadrantNom @ViewBag.EncadrantPrenom </h2>
+        <table cellpadding="20">
+            <tr>
+                <th>Discipline &nbsp &nbsp</th>
+                <th>Section &nbsp &nbsp</th>
+                <th>Jour &nbsp &nbsp</th>
+                <th>Heure &nbsp &nbsp</th>
+                <th>Lieu &nbsp &nbsp</th>
+                <th>Adresse &nbsp &nbsp</th>
+                <th>Placesecs disponibles &nbsp &nbsp</th>
+                <th>Places maximum &nbsp &nbsp</th>
+
+            </tr>
+            @foreach (var creneau in ViewBag.Creneaux as List<SportAsso.Models.Creneau>)
+            {
+
+                using (var db = new SportAsso.Models.Context_db())
+                {
+                    var encadrant = db.Personne
+                        .Where(p => p.Id_Personne == creneau.Encadrant)
+                        .FirstOrDefault();
+                    var lieu = db.Lieu
+                        .Where(l => l.Id_Lieu == creneau.Lieu_Id_Lieu)
+                        .FirstOrDefault();
+
+                    var section = db.Section
+                        .Where(s => s.Id_Section == creneau.Section_Id_Section)
+                        .FirstOrDefault();
+                    var discipline = db.Discipline
+                        .Where(d => d.Id_Discipline == section.Discipline_Id_Discipline)
+                        .FirstOrDefault();
+
+                    ViewBag.Encadrant = encadrant;
+                    ViewBag.Lieu = lieu;
+                    ViewBag.Section = section;
+                    ViewBag.Discipline = discipline;
+                }
+                <tr>
+                    <td>@ViewBag.Discipline.Nom_Discipline &nbsp &nbsp</td>
+                    <td>@creneau.Section.Nom &nbsp &nbsp</td>
+                    <td>@creneau.Jour &nbsp &nbsp</td>        
+                    <td>@creneau.Heure &nbsp &nbsp</td>
+                    <td>@ViewBag.Lieu.Nom &nbsp &nbsp</td>
+                    <td>@ViewBag.Lieu.Adresse &nbsp &nbsp</td>
+                    <td>@creneau.Nombre_Places_Dispo &nbsp &nbsp</td>
+                    <td>@creneau.Nombre_Places_Max &nbsp &nbsp</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

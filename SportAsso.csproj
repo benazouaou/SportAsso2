@@ -207,6 +207,7 @@
     <Content Include="Views\GestionAdherent\ModifierMdp.cshtml" />
     <Content Include="Views\GestionAdherent\ModifierMail.cshtml" />
     <Content Include="Views\GestionAdherent\ModifierTel.cshtml" />
+    <Content Include="Views\Encadrant\Creneaux.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
