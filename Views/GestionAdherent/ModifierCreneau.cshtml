@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "ModifierCreneau";
+}
+
+<h2>Choisir un nouveau créneau</h2>
+
+<div>
+    Les créneaux disponibles de cette section :
+</div>
+<br/>
+
+<table>
+    @foreach(var creneau in ViewBag.Creneaux as List<SportAsso.Models.Creneau>)
+    {
+        //n'affiche que ceux disponibles
+        if(creneau.Nombre_Places_Dispo > 0)
+        {
+            //récupère le lieu et encadrant du créneau
+            using(var context = new SportAsso.Models.Context_db())
+            {
+                var lieu = context.Lieu
+                    .Where(l => l.Id_Lieu == creneau.Lieu_Id_Lieu)
+                    .FirstOrDefault();
+                ViewBag.Lieu = lieu;
+                var encadrant = context.Personne
+                    .Where(e => e.Id_Personne == creneau.Encadrant)
+                    .FirstOrDefault();
+                ViewBag.Encadrant = encadrant;
+            }
+            <tr>
+                <!--infos du creneau-->
+                <td>@creneau.Jour  &nbsp @creneau.Heure  &nbsp @ViewBag.Encadrant.Prenom  &nbsp @ViewBag.Encadrant.Nom  &nbsp @ViewBag.Lieu.Nom  &nbsp @ViewBag.Lieu.Adresse &nbsp &nbsp</td>
+
+                @if(creneau.Id_Creneau == ViewBag.Creneau.Id_Creneau)
+                {
+                <td>Ceci est votre créneau actuel</td>
+                } else
+                {
+                <td>
+                    <form action="/GestionA/ModifierCreneau" method="post">
+                        <input type="hidden" value="@creneau.Id_Creneau" name="nouveau"/>
+                        <input type="hidden" value="@ViewBag.Creneau.Id_Creneau" name="ancien"/>
+                        <input type="submit" value="Choisir ce créneau"/>
+                    </form>
+                </td>
+                }
+            </tr>
+            
+        }
+    }
+</table>

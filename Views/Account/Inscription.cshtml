@@ -6,47 +6,51 @@
     ViewBag.Title = "Inscription";
 }
 
-<h1>Mon inscription en @ViewBag.Discipline.Nom_Discipline</h1>
-
 <div>
-    <h2>Ma <a href="/Discipline/Creneau/@ViewBag.Discipline.Nom_Discipline/@ViewBag.Section.Id_Section">section :</a></h2>
-    <table>
-        <tr>
-            <td>Section : &nbsp &nbsp</td>
-            <td>@ViewBag.Section.Nom &nbsp &nbsp</td>
-        </tr>
-        <tr>
-            <td>Prix annuel : &nbsp &nbsp</td>
-            <td>@ViewBag.Section.Prix &nbsp &nbsp</td>
-        </tr>
-    </table>
-</div>
+    <h1>Mon inscription en @ViewBag.Discipline.Nom_Discipline</h1>
+
+    <div>
+        <h2>Ma <a href="/Discipline/Creneau/@ViewBag.Discipline.Nom_Discipline/@ViewBag.Section.Id_Section">section :</a></h2>
+        <table>
+            <tr>
+                <td>Section : &nbsp &nbsp</td>
+                <td>@ViewBag.Section.Nom &nbsp &nbsp</td>
+            </tr>
+            <tr>
+                <td>Prix annuel : &nbsp &nbsp</td>
+                <td>@ViewBag.Section.Prix &nbsp &nbsp</td>
+            </tr>
+        </table>
+    </div>
 
 
-<div>
-    <h2>Mon creneau :</h2>
-    <table>
+    <div>
+        <h2>Mon créneau :</h2>
+        <table>
 
-        <tr>
-            <td>Jour : &nbsp &nbsp</td>
-            <td>@ViewBag.Creneau.Jour &nbsp &nbsp</td>
-        </tr>
-        <tr>
-            <td>Heure : &nbsp &nbsp</td>
-            <td>@ViewBag.Creneau.Heure &nbsp &nbsp</td>
-        </tr>
-        <tr>
-            <td>Encadrant : &nbsp &nbsp</td>
-            <td><a href="/Encadrant/Creneaux/@ViewBag.Encadrant.Id_Personne">@ViewBag.Encadrant.Prenom @ViewBag.Encadrant.Nom</a>&nbsp &nbsp</td>
-        </tr>
-        <tr>
-            <td>Lieu : &nbsp &nbsp</td>
-            <td>@ViewBag.Lieu.Nom</td>
-        </tr>
-        <tr>
-            <td>Adresse : &nbsp &nbsp</td>
-            <td>@ViewBag.Lieu.Adresse</td>
-        </tr>
+            <tr>
+                <td>Jour : &nbsp &nbsp</td>
+                <td>@ViewBag.Creneau.Jour &nbsp &nbsp</td>
+            </tr>
+            <tr>
+                <td>Heure : &nbsp &nbsp</td>
+                <td>@ViewBag.Creneau.Heure &nbsp &nbsp</td>
+            </tr>
+            <tr>
+                <td>Encadrant : &nbsp &nbsp</td>
+                <td><a href="/Encadrant/Creneaux/@ViewBag.Encadrant.Id_Personne">@ViewBag.Encadrant.Prenom @ViewBag.Encadrant.Nom</a>&nbsp &nbsp</td>
+            </tr>
+            <tr>
+                <td>Lieu : &nbsp &nbsp</td>
+                <td>@ViewBag.Lieu.Nom</td>
+            </tr>
+            <tr>
+                <td>Adresse : &nbsp &nbsp</td>
+                <td>@ViewBag.Lieu.Adresse</td>
+            </tr>
 
-    </table>
+        </table>
+    </div>
+    </br>
+    Votre dossier est validé et l'inscription est définitive, il n'est plus possible de la modifier
 </div>

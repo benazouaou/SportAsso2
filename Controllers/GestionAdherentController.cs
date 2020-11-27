@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using SportAsso.Models;
+using System.Collections.Generic;
+
 
 namespace SportAsso.Controllers
 {
@@ -82,7 +84,7 @@ namespace SportAsso.Controllers
             }
             return View();
         }
-
+        [HttpGet]
         public ActionResult ModifierMail()
         {
 
@@ -133,7 +135,7 @@ namespace SportAsso.Controllers
         }
 
 
-
+        [HttpGet]
         public ActionResult ModifierTel()
         {
 
@@ -182,5 +184,64 @@ namespace SportAsso.Controllers
             }
             return View();
         }
+
+        [HttpGet]
+        public ActionResult ModifierCreneau(int id)
+        {
+            using(var context = new Context_db())
+            {
+                Creneau creneau = context.Creneau
+                    .Where(c => c.Id_Creneau == id)
+                    .FirstOrDefault();
+                ViewBag.Creneau = creneau;
+                 List<Creneau> creneaux = context.Creneau
+                    .Where(c => c.Section_Id_Section == creneau.Section_Id_Section)
+                    .ToList();
+                ViewBag.Creneaux = creneaux;
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ModifierCreneau(FormCollection id)
+        {
+            var ancien = int.Parse(Request.Form["ancien"]);
+            var nouveau = int.Parse(Request.Form["nouveau"]);
+            int Id = (int)Session["P_id"];
+            using (var context = new Context_db())
+            {
+                try
+                {
+                    Creneau ancienC = context.Creneau
+                        .Where(c => c.Id_Creneau == ancien)
+                        .FirstOrDefault();
+                    Creneau nouveauC = context.Creneau
+                        .Where(c => c.Id_Creneau == nouveau)
+                        .FirstOrDefault();
+                    nouveauC.Nombre_Places_Dispo = nouveauC.Nombre_Places_Dispo - 1;
+                    ancienC.Nombre_Places_Dispo = ancienC.Nombre_Places_Dispo + 1;
+                    Personne adherent = context.Personne
+                        .Where(p => p.Id_Personne == Id)
+                        .FirstOrDefault();
+                    adherent.Creneau1.Add(nouveauC);
+                    adherent.Creneau1.Remove(ancienC);
+                    context.SaveChanges();
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+                {
+                    Response.Write(nouveau);
+                    foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                    {
+                        foreach (var validationError in entityValidationErrors.ValidationErrors)
+                        {
+                            Response.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                        }
+                    }
+                }
+            }
+            return Redirect("/Account/UserPannel");
+        }
     }
+
+
 }
