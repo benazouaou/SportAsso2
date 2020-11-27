@@ -15,32 +15,38 @@
 
     @using (var context = new SportAsso.Models.Context_db())
     {
-    int id = (int)Session["P_id"];
-    List<SportAsso.Models.Role>
-        roles = context.Personne
-        .Where(p => p.Id_Personne == id)
-        .SelectMany(p => p.Role)
-        .ToList();
+        int id = (int)Session["P_id"];
+
+        SportAsso.Models.Personne personne = context.Personne
+            .Where(p => p.Id_Personne == id)
+            .FirstOrDefault();
+        ViewBag.Personne = personne;
+
+        List<SportAsso.Models.Role> roles = context.Personne
+            .Where(p => p.Id_Personne == id)
+            .SelectMany(p => p.Role)
+            .ToList();
         ViewBag.Roles = roles;
 
-        List<SportAsso.Models.Creneau>
-            creneaux = context.Personne
+        //si adhérent liste des cours qu'il donne
+        List<SportAsso.Models.Creneau> cours = context.Creneau
+            .Where(c => c.Encadrant == id)
+            .ToList();
+        ViewBag.Cours = cours;
+
+        List<SportAsso.Models.Creneau> creneaux = context.Personne
             .Where(p => p.Id_Personne == id)
             .SelectMany(p => p.Creneau)
             .ToList();
-            ViewBag.Creneaux = creneaux;
+        ViewBag.Creneaux = creneaux;
 
-            List<SportAsso.Models.Dossier>
-                dossier = context.Dossier
-                .Where(d => d.Personne_Id_Personne == id)
-                .ToList();
-                ViewBag.Dossiers = dossier;
+        List<SportAsso.Models.Dossier> dossier = context.Dossier
+            .Where(d => d.Personne_Id_Personne == id)
+            .ToList();
+        ViewBag.Dossiers = dossier;
 
-                SportAsso.Models.Personne personne = context.Personne
-                .Where(p => p.Id_Personne == id)
-                .FirstOrDefault();
-                ViewBag.Personne = personne;
-                }
+
+    }
                 <br/>
                 <nav class="nav  flex-column" style="width:190px; padding:15px; background-color:lightgray">
 
@@ -103,6 +109,12 @@
                                     <a class="dropdown-toggle" role="button" id="deroulanta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mes cours</a>
                                     <div class="dropdown-menu" style="background-color:lightgray" aria-labelledby="deroulanta">
                                         <ul>
+                                            @foreach (var cours in ViewBag.Cours as List<SportAsso.Models.Creneau>)
+                                            {
+                                                <li>
+                                                    <a class="dropdown-item" href="/Account/Cours/@cours.Id_Creneau">@cours.Jour @cours.Heure</a>
+                                                </li>
+                                            }
                                             <li>
                                                 <a class="dropdown-item" href="/Account/Cours">test</a>
                                             </li>
@@ -115,6 +127,5 @@
                     </div>
                 </nav>
 
-                @RenderBody();
-
+                @RenderBody()
 </body>

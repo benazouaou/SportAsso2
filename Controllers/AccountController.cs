@@ -134,8 +134,33 @@ namespace SportAsso.Controllers
 
         //Gestion de la partie encadrant
 
-        public ActionResult Cours()
+        public ActionResult Cours(int id)
         {
+            using(var context = new Context_db())
+            {
+                Creneau creneau = context.Creneau
+                    .Where(c => c.Id_Creneau == id)
+                    .FirstOrDefault();
+                ViewBag.Creneau = creneau;
+                Section section = context.Section
+                    .Where(s => s.Id_Section == creneau.Section_Id_Section)
+                    .FirstOrDefault();
+                ViewBag.Section = section;
+                Discipline discipline = context.Discipline
+                    .Where(d => d.Id_Discipline == section.Discipline_Id_Discipline)
+                    .FirstOrDefault();
+                ViewBag.Discipline = discipline;
+                Lieu lieu = context.Lieu
+                    .Where(l => l.Id_Lieu == creneau.Lieu_Id_Lieu)
+                    .FirstOrDefault();
+                ViewBag.Lieu = lieu;
+                /**List<Personne> personnes = context.Creneau
+                    .Where(c => c.Id_Creneau == id)
+                    .SelectMany(c => c.Personne)
+                    .ToList();
+                ViewBag.Personnes = personnes;
+                **/
+            }
             return View();
         }
 
