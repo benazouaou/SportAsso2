@@ -134,6 +134,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DisciplineController.cs" />
     <Compile Include="Controllers\EncadrantController.cs" />
+    <Compile Include="Controllers\GestionAdherentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -199,6 +200,13 @@
     <Content Include="Views\Discipline\Creneau.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Encadrant\Index.cshtml" />
+    <Content Include="Views\Shared\LayoutUserPannel.cshtml" />
+    <Content Include="Views\Account\Preinscription.cshtml" />
+    <Content Include="Views\Account\Inscription.cshtml" />
+    <Content Include="Views\Account\Cours.cshtml" />
+    <Content Include="Views\GestionAdherent\ModifierMdp.cshtml" />
+    <Content Include="Views\GestionAdherent\ModifierMail.cshtml" />
+    <Content Include="Views\GestionAdherent\ModifierTel.cshtml" />
     <Content Include="Views\Encadrant\Creneaux.cshtml" />
   </ItemGroup>
   <ItemGroup>

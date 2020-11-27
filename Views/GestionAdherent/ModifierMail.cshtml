@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "~/Views/Shared/LayoutUserPannel.cshtml";
+}
+@{
+    ViewBag.Title = "ModifierMail";
+}
+
+<div>
+    <form method="post" action="/GestionA/ModifierMail">
+        <fieldset>
+            <legend>Modification de votre adresse mail:</legend>
+            <p>
+                <label>Votre nouvelle adresse :</label>
+                <input name="nouveau" type="text" />
+            </p>
+            <p>
+                <label>Confirmer votre nouvelle adresse : </label>
+                <input name="nouveauConf" type="text" />
+                @if (ViewBag.Nouveau != null)
+                {
+                    @ViewBag.Nouveau
+                }
+            </p>
+            <p>
+                <input type="submit" value="envoyer" />
+            </p>
+        </fieldset>
+    </form>
+</div>

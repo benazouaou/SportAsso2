@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Shared/LayoutUserPannel.cshtml";
+}
+@{
+    ViewBag.Title = "Cours";
+}
+
+<h2>@ViewBag.Discipline.Nom_Discipline @ViewBag.Section.Nom @ViewBag.Creneau.Jour @ViewBag.Creneau.Heure</h2>
+
+
+<div>
+    <div>Lieux : @ViewBag.Lieu.Nom @ViewBag.Lieu.Adresse</div>
+</div>
+<div>
+    <div>Participants :</div>
+    <ul>
+        @foreach(var personne in ViewBag.Personnes as List<SportAsso.Models.Personne>)
+        {
+            <li>
+                @personne.Nom @personne.Prenom @personne.E_mail
+            </li>
+        }
+    </ul>
+</div>
