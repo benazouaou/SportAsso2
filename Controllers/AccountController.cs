@@ -48,7 +48,7 @@ namespace SportAsso.Controllers
             else
             {
                 db.Personne.Add(p);
-                Role rA = db.Role.Where(x => x.Id_Role == 1).SingleOrDefault();
+                Role rA = db.Role.Where(x => x.Nom_Role == "Adhérent").SingleOrDefault();
                 p.Role.Add(rA);
                 db.SaveChanges();
 

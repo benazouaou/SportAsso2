@@ -15,8 +15,29 @@ namespace SportAsso.Controllers
         // GET: Encadrant
         public ActionResult Index()
         {
-            Role rA = db.Role.Where(x => x.Id_Role == 3).SingleOrDefault();
-            List<Personne> Encadrants = db.Personne.Where(e => e.Role.Equals(rA)).ToList();
+            
+            List<Personne> encadrants  = db.Personne.Where(x => x.Role.Any(s => s.Nom_Role == "Encadrant")).ToList();
+            ViewBag.Encadrants = encadrants;
+
+      
+            return View();
+        }
+
+        public ActionResult Creneaux(int id)
+        {
+
+            Personne encadrant = db.Personne
+                    .Where(e => e.Id_Personne == id)
+                    .FirstOrDefault();
+
+            List<Creneau> creneaux = db.Creneau
+              .Where(c => c.Encadrant == id)
+              .ToList();
+
+            ViewBag.Creneaux = creneaux;
+            ViewBag.Encadrant = id;
+            ViewBag.EncadrantNom = encadrant.Nom;
+            ViewBag.EncadrantPrenom = encadrant.Prenom;
 
             return View();
         }
