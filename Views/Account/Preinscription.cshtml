@@ -7,6 +7,24 @@
     ViewBag.Title = "Preinscription";
 }
 
+<!-- fonction appelée lorsque l'utilisateur choisi de supprimer son dossier-->
+<script>
+    function confirmation() {
+        //récupère le formulaire
+        let choix = document.getElementById("choix");
+        //fenêtre popup de confirmation
+        if (confirm("voulez vous réellement annuler cette inscription ?")) {
+            //si le bouton oui est cliqué le formulaire prend une action qui exécute la suppression du dossier
+            choix.setAttribute("action", "/GestionA/SupprimerDossier");
+        } else {
+            //sinon l'action du formulaire renvoi à la même page, il ne se passe rien
+            choix.setAttribute("action", "");
+            choix.setAttribute("method", "get");
+        }
+
+    }
+</script>
+
 <div>
     <!--Les infos de l'inscription-->
     <div>
@@ -55,15 +73,17 @@
         <h2>Mon dossier :</h2>
         <!--TODO aller chercher les documents, s'ils sont validés et ceux à charger-->
     </div>
+   
     <!--actions possibles-->
     <div>
         <form action="/GestionA/ModifierCreneau/@ViewBag.Creneau.Id_Creneau">
             <input type="submit" value="Modifier le créneau" />
         </form>
-
-        <form action="">
-            <input type="submit" value="Supprimer mon inscription" />
-            <!--pop up de confirmation, suppression puis redirection vers espace perso-->
+        <!-- l'action du formulaire est initialisée par la fonction confirmation()-->
+        <form id="choix" action="" method="post">
+            <input name="dossier" type="hidden" value="@ViewBag.Dossier.Id_Dossier" />
+            <input name="creneau" type="hidden" value="@ViewBag.Creneau.Id_Creneau" />
+            <input type="submit" value="Supprimer mon inscription" onclick="confirmation()" />
         </form>
 
     </div>

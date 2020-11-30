@@ -229,7 +229,44 @@ namespace SportAsso.Controllers
                 }
                 catch (System.Data.Entity.Validation.DbEntityValidationException ex)
                 {
-                    Response.Write(nouveau);
+                    
+                    foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                    {
+                        foreach (var validationError in entityValidationErrors.ValidationErrors)
+                        {
+                            Response.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                        }
+                    }
+                }
+            }
+            return Redirect("/Account/UserPannel");
+        }
+        [HttpPost]
+        public ActionResult SupprimerDossier(FormCollection id)
+        {
+            var dossierId = int.Parse(Request.Form["dossier"]);
+            var creneauId = int.Parse(Request.Form["creneau"]);
+            using(var context = new Context_db())
+            {
+                Dossier dossier = context.Dossier
+                    .Where(d => d.Id_Dossier == dossierId)
+                    .FirstOrDefault();
+                Creneau creneau = context.Creneau
+                    .Where(c => c.Id_Creneau == creneauId)
+                    .FirstOrDefault();
+                Personne adherent = context.Personne
+                    .Where(p => p.Id_Personne == dossier.Personne_Id_Personne)
+                    .FirstOrDefault();
+                try
+                {
+                    context.Dossier.Remove(dossier);
+                    adherent.Creneau1.Remove(creneau);
+                    creneau.Nombre_Places_Dispo = creneau.Nombre_Places_Dispo + 1;
+                    context.SaveChanges();
+
+                } catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+                {
+                    
                     foreach (var entityValidationErrors in ex.EntityValidationErrors)
                     {
                         foreach (var validationError in entityValidationErrors.ValidationErrors)
@@ -244,4 +281,4 @@ namespace SportAsso.Controllers
     }
 
 
-}
+    }
