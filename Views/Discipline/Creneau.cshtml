@@ -42,6 +42,22 @@
             <td>@ViewBag.Encadrant.Prenom @ViewBag.Encadrant.Nom &nbsp &nbsp</td>
             <td>@creneau.Nombre_Places_Dispo &nbsp &nbsp</td>
             <td>@creneau.Nombre_Places_Max &nbsp &nbsp</td>
+            @if (Session["P_id"] != null)
+            {
+                if (creneau.Nombre_Places_Dispo == 0)
+                {
+                    <td>Nombre de place complet</td>
+                }
+                else
+                {
+                    <td>
+                        <a href="/InscriptionCreneau/Index/@creneau.Id_Creneau">
+                            <input type="submit" value="S'inscrire" />
+                        </a>
+                    </td>
+                }
+
+            }
         </tr>
             }
         </table>

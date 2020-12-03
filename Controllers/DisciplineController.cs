@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -43,7 +44,7 @@ namespace SportAsso.Controllers
 
             using (var context = new Context_db())
             {
-           
+
                 Section section = context.Section
                     .Where(c => c.Id_Section == id2)
                     .FirstOrDefault();
@@ -57,5 +58,9 @@ namespace SportAsso.Controllers
             }
             return View();
         }
+
+
+
+      
     }
 }

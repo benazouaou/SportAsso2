@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm("index", "InscriptionCreneau", FormMethod.Post,
+                                        new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <span>
+        <span>
+            <a href="/">home></a><a href="/Discipline">Disciplines></a><a href="/Discipline/Section/@ViewBag.Discipline">
+                @ViewBag.Discipline
+        </a><a href="/Discipline/Creneau/@ViewBag.CreneauDiscipline/@ViewBag.SectionCreneau">Creneau></a><a href="InscriptionCreneau/Index">Inscription: Etape 1</a>
+    </span>
+</span>
+    <h2>Inscriptions a la section @ViewBag.SectionCreneau de la discipline @ViewBag.CreneauDiscipline: Etape 1</h2>
+
+<fieldset>
+    <legend>Documents à fournir:</legend>
+    <table>
+        @ViewBag.message
+        <tr>
+            <td>Fiche de renseignement:</td>
+            <td><input type="file" name="nameFile" /></td>
+            <td><input type="submit" value="Charger" /></td>
+        </tr>
+
+        <tr>
+            <td>Attestation medicale:</td>
+            <td><input type="file" name="nameFile" /></td>
+            <td><input type="submit" value="Charger" /></td>
+
+        </tr>
+
+        <tr>
+            <td>Assurance de responsabilité civile:</td>
+            <td><input type="file" name="nameFile" /></td>
+            <td><input type="submit" value="Charger" /></td>
+
+        </tr>
+
+
+    </table>
+
+</fieldset>
+
+
+}
+
+    <form action="/InscriptionCreneau/payerCreneau/@ViewBag.Creneau">
+        <input type="submit" value="Suivant"/>
+    </form>
+
+
+
+

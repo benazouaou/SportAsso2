@@ -109,9 +109,6 @@
       <Private>True</Private>
       <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -136,6 +133,7 @@
     <Compile Include="Controllers\EncadrantController.cs" />
     <Compile Include="Controllers\GestionAdherentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InscriptionCreneauController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -217,10 +215,14 @@
     <Content Include="Views\GestionAdherent\ModifierMail.cshtml" />
     <Content Include="Views\GestionAdherent\ModifierTel.cshtml" />
     <Content Include="Views\Encadrant\Creneaux.cshtml" />
+    <Content Include="Views\InscriptionCreneau\Index.cshtml" />
+    <Content Include="Views\InscriptionCreneau\payerCreneau.cshtml" />
+    <Content Include="Views\InscriptionCreneau\Confirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
+    <Folder Include="Files\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
