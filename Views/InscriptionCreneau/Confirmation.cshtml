@@ -3,16 +3,28 @@
     ViewBag.Title = "Confirmation";
 }
 
+   
 
-
-<h2>Confiramtion de la préinscription a la section @ViewBag.Section de la discipline @ViewBag.Discipline: Etape 3</h2>
+<h3>Confiramtion de la préinscription a la section @ViewBag.Section de la discipline @ViewBag.Discipline</h3>
 <div>
 
     <p>
         Votre préinscription a la section @ViewBag.Section de la discipline @ViewBag.Discipline a bien été prise en compte,
         une fois tous vos documents validé par un membre du bureau d'administration vous serez officiellement inscripts.
-
     </p>
+
+    @if (ViewBag.length == null || ViewBag.length < 3)
+    {
+
+        <p>
+            Votre dossier est incomplet,Vous avez un délai d'un mois pour fournir tous les documents manquants.
+        </p>
+
+
+    }
+    <p>Votre dossier est accessible dans votre espace personnel</p>
+
+
 
 </div>
 

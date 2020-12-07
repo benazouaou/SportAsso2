@@ -145,6 +145,10 @@
     <Compile Include="Migrations\202011271540524_ValidationDossier.Designer.cs">
       <DependentUpon>202011271540524_ValidationDossier.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012031544529_docPath.cs" />
+    <Compile Include="Migrations\202012031544529_docPath.Designer.cs">
+      <DependentUpon>202012031544529_docPath.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Creneau.cs" />
     <Compile Include="Models\Discipline.cs" />
@@ -216,7 +220,6 @@
     <Content Include="Views\GestionAdherent\ModifierTel.cshtml" />
     <Content Include="Views\Encadrant\Creneaux.cshtml" />
     <Content Include="Views\InscriptionCreneau\Index.cshtml" />
-    <Content Include="Views\InscriptionCreneau\payerCreneau.cshtml" />
     <Content Include="Views\InscriptionCreneau\Confirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +241,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011271540524_ValidationDossier.resx">
       <DependentUpon>202011271540524_ValidationDossier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012031544529_docPath.resx">
+      <DependentUpon>202012031544529_docPath.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

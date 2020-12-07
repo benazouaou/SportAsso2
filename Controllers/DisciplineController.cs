@@ -55,6 +55,16 @@ namespace SportAsso.Controllers
                 ViewBag.Section = section;
                 ViewBag.Discipline = id;
                 ViewBag.Creneaux = creneaux;
+
+                if (Session["P_id"] != null)
+                {
+                    int id_personne = (int)Session["P_id"];
+                    Dossier dossier = context.Dossier.Where(d => d.Personne_Id_Personne == id_personne && d.Section_Id_Section == section.Id_Section).SingleOrDefault();
+                    if (dossier != null)
+                    {
+                        ViewBag.dossier = dossier.Id_Dossier;
+                    }
+                }
             }
             return View();
         }
