@@ -1,10 +1,12 @@
 ﻿@{
+    <!--cette vue est emboitee dans un layout qui contient la barre de navigation de l'espace adherent, lui meme imbrique dans le layout general du site-->
     Layout = "~/Views/Shared/LayoutUserPannel.cshtml";
 }
 @{
     ViewBag.Title = "Cours";
 }
 
+<!--vue accessible uniquement pour les encadrants-->
 <h2>@ViewBag.Discipline.Nom_Discipline @ViewBag.Section.Nom @ViewBag.Creneau.Jour @ViewBag.Creneau.Heure</h2>
 
 
@@ -14,9 +16,11 @@
 <div>
     <div>Participants :</div>
     <ul>
+        <!--parcours tous les adherents du creneau, passes en parametre par le controller dans le viewbag-->
         @foreach(var personne in ViewBag.Personnes as List<SportAsso.Models.Personne>)
         {
             <li>
+                <!--affiche leur nom prenom et adresse mail-->
                 @personne.Nom @personne.Prenom @personne.E_mail
             </li>
         }

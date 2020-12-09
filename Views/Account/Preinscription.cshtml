@@ -1,5 +1,6 @@
 ﻿
 @{
+    <!--cette vue est emboitee dans un layout qui contient la barre de navigation de l'espace adherent, lui meme imbrique dans le layout general du site-->
     Layout = "~/Views/Shared/LayoutUserPannel.cshtml";
 }
 
@@ -7,8 +8,7 @@
     ViewBag.Title = "Preinscription";
 }
 
-
-
+<!--vue qui reprend la pré inscription d'un utilisateur à un creneau-->
 <!-- fonction appelée lorsque l'utilisateur choisi de supprimer son dossier-->
 <script>
     function confirmation() {
@@ -16,7 +16,7 @@
         let choix = document.getElementById("choix");
         //fenêtre popup de confirmation
         if (confirm("voulez vous réellement annuler cette inscription ?")) {
-            //si le bouton oui est cliqué le formulaire prend une action qui exécute la suppression du dossier
+            //si le bouton oui est cliqué l'action du formulaire est mise à jour pour rediriger vers une methode qui exécute la suppression du dossier
             choix.setAttribute("action", "/GestionA/SupprimerDossier");
         } else {
             //sinon l'action du formulaire renvoi à la même page en utilisant la méthtode get, il ne se passe rien dans la base de données
@@ -32,9 +32,11 @@
     <div>
         <h1>Ma pré inscription en @ViewBag.Discipline.Nom_Discipline :</h1>
         <div>
+            <!--lien qui renvoit vers la page avec tous les creneaux de la section-->
             <h2>Ma <a href="/Discipline/Creneau/@ViewBag.Discipline.Nom_Discipline/@ViewBag.Section.Id_Section">section :</a></h2>
             <table>
                 <tr>
+                    <!-- affiche les informations sur la section ou l'adherent est inscrit-->
                     <td>Section : &nbsp &nbsp</td>
                     <td>@ViewBag.Section.Nom &nbsp &nbsp</td>
                 </tr>
@@ -45,6 +47,7 @@
             </table>
         </div>
         <div>
+            <!-- affiche les informations sur le creneau où l'utilisateur est inscrit-->
             <h2>Mon créneau :</h2>
             <table>
                 <tr>
@@ -57,6 +60,7 @@
                 </tr>
                 <tr>
                     <td>Encadrant : &nbsp &nbsp</td>
+                    <!--lien qui renvoi a la page d'informations sur l'encadrant-->
                     <td><a href="/Encadrant/Creneaux/@ViewBag.Encadrant.Id_Personne">@ViewBag.Encadrant.Prenom @ViewBag.Encadrant.Nom</a>&nbsp &nbsp</td>
                 </tr>
                 <tr>
@@ -71,16 +75,16 @@
         </div>
     </div>
 
-    <!--Le dossier à compléter-->
+    <!--Le dossier que l'utilisateur doit compléter pour qu'il soit valide-->
     <div>
         <h2>Mon dossier :</h2>
-        <!--TODO aller chercher les documents, s'ils sont validés et ceux à charger-->
         <table>
             <tr>
                 <td>Mon paiement : &nbsp &nbsp</td>
                 <td> Effectué</td>
             </tr>
             <tr>
+                <!--pour la fiche de renseignement-->
                 <td>Ma fiche de renseignement : &nbsp &nbsp</td>
                 <!--si le document existe et est valide-->
                 @if (ViewBag.Renseignement != null && ViewBag.Renseignement.Est_Valide == 1)
@@ -95,11 +99,13 @@
                 else
                 {
                     <!--si le document n'a pas encore ete fourni par l'adherent-->
+                    <!--cree un formulaire qui ne prend qu'un fichier et passe a la methode qui mettra a jour les documents du dossier-->
                     using (Html.BeginForm("ModificationDoc", "GestionA", FormMethod.Post,
                                         new { enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
                         <td>
+                            <!--accepte uniquement les formats jpng png jpg pdf et doc-->
                             <input id="files" type="file" name="renseignement" accept=".jpng,.png,.jpg,.pdf,.doc" />
                         </td>
                         <td><input type="submit" value="envoyer" /></td>
@@ -108,45 +114,58 @@
 
             </tr>
             <tr>
+                <!--pour le certificat medical-->
                 <td> Mon certificat médical : &nbsp &nbsp</td>
+                <!--si le document existe et est valide-->
                 @if (ViewBag.Certificat != null && ViewBag.Certificat.Est_Valide == 1)
                 {
                     <td>Document Valide</td>
                 }
                 else if (ViewBag.Certificat != null && ViewBag.Certificat.Est_Valide == 0)
                 {
+                    <!--si le document existe mais qu'il n'est pas encore valide-->
                     <td>Document en cours de validation</td>
                 }
                 else
                 {
+                    <!--si le document n'a pas encore ete fourni par l'adherent-->
+                    <!--cree un formulaire qui ne prend qu'un fichier et passe a la methode qui mettra a jour les documents du dossier-->
                     using (Html.BeginForm("ModificationDoc", "GestionA", FormMethod.Post,
                                         new { enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
                         <td>
+                            <!--accepte uniquement les formats jpng png jpg pdf et doc-->
                             <input id="files" type="file" name="medical" accept=".jpng,.png,.jpg,.pdf,.doc" />
                         </td>
-                        <td><input type="submit" value="envoyer"/></td>
+                        <td><input type="submit" value="envoyer" /></td>
                     }
                 }
-                </tr>
+            </tr>
             <tr>
+                <!--pour l'attestation de responsabilite-->
                 <td>Mon attestation de responsabilité : &nbsp &nbsp</td>
+                <!--si le document existe et est valide-->
                 @if (ViewBag.Assurance != null && ViewBag.Assurance.Est_Valide == 1)
                 {
                     <td>Document Valide</td>
                 }
+
                 else if (ViewBag.Assurance != null && ViewBag.Assurance.Est_Valide == 0)
                 {
+                    <!--si le document existe mais qu'il n'est pas encore valide-->
                     <td>Document en cours de validation</td>
                 }
                 else
                 {
+                    <!--si le document n'a pas encore ete fourni par l'adherent-->
+                    <!--cree un formulaire qui ne prend qu'un fichier et passe a la methode qui mettra a jour les documents du dossier-->
                     using (Html.BeginForm("ModificationDoc", "GestionA", FormMethod.Post,
                                         new { enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
                         <td>
+                            <!--accepte uniquement les formats jpng png jpg pdf et doc-->
                             <input id="files" type="file" name="responsabilite" accept=".jpng,.png,.jpg,.pdf,.doc" />
                         </td>
                         <td><input type="submit" value="envoyer" /></td>
@@ -159,6 +178,7 @@
     <br />
     <!--les actions possibles-->
     <div>
+        <!-- bouton de formulaire sans input qui redirige vers une autre page pour choisir le nouveau creneau-->
         <form action="/GestionA/ModifierCreneau/@ViewBag.Creneau.Id_Creneau">
             <input type="submit" value="Modifier le créneau" />
         </form>
@@ -166,6 +186,7 @@
         <form id="choix" action="" method="post">
             <input name="dossier" type="hidden" value="@ViewBag.Dossier.Id_Dossier" />
             <input name="creneau" type="hidden" value="@ViewBag.Creneau.Id_Creneau" />
+            <!--bouton de formulaire qui si la decision de supprimer le dossier est validee renvoi vers une methode avec les input caches necessaire a cette suppression-->
             <input type="submit" value="Supprimer mon inscription" onclick="confirmation()" />
         </form>
 

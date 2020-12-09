@@ -6,6 +6,7 @@
 
 <h2>Se Connecter</h2>
 
+<!--formulaire html-->
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
@@ -31,6 +32,7 @@
         </div>
     </div>
 
+    <!--en cas de tentative de connexion infructueuse, affiche un message d'erreur pour indiquer le probleme-->
     <div class="form-group">
         <p style="color:red">
             @ViewBag.error

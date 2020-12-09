@@ -1,17 +1,20 @@
 ﻿@{
+    <!--cette vue est emboitee dans un layout qui contient la barre de navigation de l'espace adherent, lui meme imbrique dans le layout general du site-->
     Layout = "~/Views/Shared/LayoutUserPannel.cshtml";
 }
 
 @{
     ViewBag.Title = "Inscription";
 }
-
+<!--vue qui reprend l'inscription d'un utilisateur à un creneau-->
 <div>
     <h1>Mon inscription en @ViewBag.Discipline.Nom_Discipline</h1>
 
     <div>
+        <!--lien qui renvoit vers la page avec tous les creneaux de la section-->
         <h2>Ma <a href="/Discipline/Creneau/@ViewBag.Discipline.Nom_Discipline/@ViewBag.Section.Id_Section">section :</a></h2>
         <table>
+            <!-- affiche les informations sur la section ou l'adherent est inscrit-->
             <tr>
                 <td>Section : &nbsp &nbsp</td>
                 <td>@ViewBag.Section.Nom &nbsp &nbsp</td>
@@ -27,7 +30,7 @@
     <div>
         <h2>Mon créneau :</h2>
         <table>
-
+            <!-- affiche les informations sur le creneau où l'utilisateur est inscrit-->
             <tr>
                 <td>Jour : &nbsp &nbsp</td>
                 <td>@ViewBag.Creneau.Jour &nbsp &nbsp</td>
@@ -38,6 +41,7 @@
             </tr>
             <tr>
                 <td>Encadrant : &nbsp &nbsp</td>
+                <!--lien qui renvoi a la page d'informations sur l'encadrant-->
                 <td><a href="/Encadrant/Creneaux/@ViewBag.Encadrant.Id_Personne">@ViewBag.Encadrant.Prenom @ViewBag.Encadrant.Nom</a>&nbsp &nbsp</td>
             </tr>
             <tr>
