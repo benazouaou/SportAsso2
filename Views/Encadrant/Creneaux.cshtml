@@ -7,7 +7,14 @@
     <span><a href="/">home></a><a href="/Encadrant">Encadrants></a>
                                <a href="/Encadrant/Creneaux/@ViewBag.Encadrant">@ViewBag.EncadrantNom @ViewBag.EncadrantPrenom</a></span>
     <div class="col-md-12">
+        <h2>Contacter l'encadrant @ViewBag.EncadrantNom @ViewBag.EncadrantPrenom </h2>
+        
+        <div>
+            E mail :  @ViewBag.EncadrantMail
+        </div>
+
         <h2>Creneaux de l'encadrant @ViewBag.EncadrantNom @ViewBag.EncadrantPrenom </h2>
+
         <table cellpadding="20">
             <tr>
                 <th>Discipline &nbsp &nbsp</th>
@@ -47,7 +54,7 @@
                 <tr>
                     <td>@ViewBag.Discipline.Nom_Discipline &nbsp &nbsp</td>
                     <td>@creneau.Section.Nom &nbsp &nbsp</td>
-                    <td>@creneau.Jour &nbsp &nbsp</td>        
+                    <td>@creneau.Jour &nbsp &nbsp</td>
                     <td>@creneau.Heure &nbsp &nbsp</td>
                     <td>@ViewBag.Lieu.Nom &nbsp &nbsp</td>
                     <td>@ViewBag.Lieu.Adresse &nbsp &nbsp</td>

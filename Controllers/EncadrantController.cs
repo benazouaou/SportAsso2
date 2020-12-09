@@ -38,6 +38,7 @@ namespace SportAsso.Controllers
             ViewBag.Encadrant = id;
             ViewBag.EncadrantNom = encadrant.Nom;
             ViewBag.EncadrantPrenom = encadrant.Prenom;
+            ViewBag.EncadrantMail = encadrant.E_mail;
 
             return View();
         }
