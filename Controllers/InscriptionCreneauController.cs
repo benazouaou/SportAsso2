@@ -121,12 +121,17 @@ namespace SportAsso.Controllers
                     }            
             }
 
-            ViewBag.length = nameFile.Length;
+            int idP = (int)Session["P_id"];
+            int ids = (int)Session["Creneau"];
+            // remplissage de la table inscrit
+            Personne p = context.Personne.Where(x => x.Id_Personne == idP).FirstOrDefault();    
+            Creneau cr = context.Creneau.Where(x => x.Id_Creneau == ids).FirstOrDefault();
+            p.Creneau1.Add(cr);
+            context.SaveChanges();
+
 
             //decrementer le nombre de places disponible 
-            int id = (int)Session["Creneau"];
-            Creneau creneau = context.Creneau.Where(x => x.Id_Creneau == id).FirstOrDefault();
-            creneau.Nombre_Places_Dispo -= 1;
+           cr.Nombre_Places_Dispo -= 1;
             context.SaveChanges();
 
             return View();
