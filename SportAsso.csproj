@@ -109,9 +109,6 @@
       <Private>True</Private>
       <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -136,6 +133,7 @@
     <Compile Include="Controllers\EncadrantController.cs" />
     <Compile Include="Controllers\GestionAdherentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InscriptionCreneauController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -146,6 +144,10 @@
     <Compile Include="Migrations\202011271540524_ValidationDossier.cs" />
     <Compile Include="Migrations\202011271540524_ValidationDossier.Designer.cs">
       <DependentUpon>202011271540524_ValidationDossier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012031544529_docPath.cs" />
+    <Compile Include="Migrations\202012031544529_docPath.Designer.cs">
+      <DependentUpon>202012031544529_docPath.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Creneau.cs" />
@@ -218,10 +220,13 @@
     <Content Include="Views\GestionAdherent\ModifierTel.cshtml" />
     <Content Include="Views\Encadrant\Creneaux.cshtml" />
     <Content Include="Views\GestionAdherent\ModifierCreneau.cshtml" />
+    <Content Include="Views\InscriptionCreneau\Index.cshtml" />
+    <Content Include="Views\InscriptionCreneau\Confirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
+    <Folder Include="Files\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -237,6 +242,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011271540524_ValidationDossier.resx">
       <DependentUpon>202011271540524_ValidationDossier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012031544529_docPath.resx">
+      <DependentUpon>202012031544529_docPath.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

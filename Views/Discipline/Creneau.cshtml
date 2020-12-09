@@ -6,9 +6,17 @@
 
 <div class="row">
     <div class="col-md-12">
-        <span><a href="/">home></a><a href="/Discipline">Disciplines></a><a href="/Discipline/Section/@ViewBag.Discipline">@ViewBag.Discipline></a><a href="/Discipline/Creneau/@ViewBag.Discipline/@ViewBag.SectionId">Creneau</a></span>
+        <span><a href="/">home></a><a href="/Discipline">Disciplines></a><a href="/Discipline/Section/@ViewBag.Discipline">@ViewBag.Discipline></a>
+        <a href="/Discipline/Creneau/@ViewBag.Discipline/@ViewBag.SectionId">Creneau</a></span>
 
         <h2>Creneaux de la section @ViewBag.Section.Nom de la discipline @ViewBag.Discipline</h2>
+
+        @if (ViewBag.dossier != null)
+        {
+        <div class="btn-danger">Vous étes déja inscrit à un des créneaux de cette section </div>
+        }
+
+        <br />
         <table cellpadding="20">
             <tr>
                 <th>Jour &nbsp &nbsp</th>
@@ -34,15 +42,31 @@
                     ViewBag.Encadrant = encadrant;
                     ViewBag.Lieu = lieu;
                 }
-        <tr>
-            <td>@creneau.Jour &nbsp &nbsp</td>
-            <td>@creneau.Heure &nbsp &nbsp</td>
-            <td>@ViewBag.Lieu.Nom &nbsp &nbsp</td>
-            <td>@ViewBag.Lieu.Adresse &nbsp &nbsp</td>
-            <td>@ViewBag.Encadrant.Prenom @ViewBag.Encadrant.Nom &nbsp &nbsp</td>
-            <td>@creneau.Nombre_Places_Dispo &nbsp &nbsp</td>
-            <td>@creneau.Nombre_Places_Max &nbsp &nbsp</td>
-        </tr>
+                <tr>
+                    <td>@creneau.Jour &nbsp &nbsp</td>
+                    <td>@creneau.Heure &nbsp &nbsp</td>
+                    <td>@ViewBag.Lieu.Nom &nbsp &nbsp</td>
+                    <td>@ViewBag.Lieu.Adresse &nbsp &nbsp</td>
+                    <td>@ViewBag.Encadrant.Prenom @ViewBag.Encadrant.Nom &nbsp &nbsp</td>
+                    <td>@creneau.Nombre_Places_Dispo &nbsp &nbsp</td>
+                    <td>@creneau.Nombre_Places_Max &nbsp &nbsp</td>
+
+                    @if (Session["P_id"] != null && ViewBag.dossier == null)
+                    {
+                        if (creneau.Nombre_Places_Dispo == 0)
+                        {
+                            <td>Nombre de place complet</td>
+                        } else
+                        {
+                            <td>
+                                <a href="/InscriptionCreneau/Index/@creneau.Id_Creneau">
+                                    <input type="submit" value="S'inscrire" />
+                                </a>
+                            </td>
+                        }
+
+                    }
+                </tr>
             }
         </table>
     </div>

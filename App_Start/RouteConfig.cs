@@ -21,22 +21,32 @@ namespace SportAsso
 );
 
             routes.MapRoute(
+                 name: "inscrip",
+                 url: "InscriptionCreneau/{action}/{id}/{id2}",
+                 //id = discipline id2=section 
+                 defaults: new { controller = "InscriptionCreneau", action = "Index" }
+);
+            
+
+            routes.MapRoute(
                name: "Account",
                url: "Account/{action}/{id}",
                //id = numéro du dossier en get 
                defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
 );
+
             routes.MapRoute(
               name: "GestionA",
               url: "GestionA/{action}/{id}",
               defaults: new { controller = "GestionAdherent", action = "Index", id = UrlParameter.Optional }
-);
+ );
+
 
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+ );
         }
     }
 }
