@@ -7,5 +7,152 @@
     ViewBag.Title = "Preinscription";
 }
 
-<h2>Mes pré-inscriptions</h2>
+<!-- fonction appelée lorsque l'utilisateur choisi de supprimer son dossier-->
+<script>
+    function confirmation() {
+        //récupère le formulaire
+        let choix = document.getElementById("choix");
+        //fenêtre popup de confirmation
+        if (confirm("voulez vous réellement annuler cette inscription ?")) {
+            //si le bouton oui est cliqué le formulaire prend une action qui exécute la suppression du dossier
+            choix.setAttribute("action", "/GestionA/SupprimerDossier");
+        } else {
+            //sinon l'action du formulaire renvoi à la même page en utilisant la méthtode get, il ne se passe rien dans la base de données
+            choix.setAttribute("action", "");
+            choix.setAttribute("method", "get");
+        }
+
+    }
+</script>
+
+<div>
+    <!--Les infos de l'inscription-->
+    <div>
+        <h1>Ma pré inscription en @ViewBag.Discipline.Nom_Discipline :</h1>
+        <div>
+            <h2>Ma <a href="/Discipline/Creneau/@ViewBag.Discipline.Nom_Discipline/@ViewBag.Section.Id_Section">section :</a></h2>
+            <table>
+                <tr>
+                    <td>Section : &nbsp &nbsp</td>
+                    <td>@ViewBag.Section.Nom &nbsp &nbsp</td>
+                </tr>
+                <tr>
+                    <td>Prix annuel : &nbsp &nbsp</td>
+                    <td>@ViewBag.Section.Prix &nbsp &nbsp</td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <h2>Mon créneau :</h2>
+            <table>
+                <tr>
+                    <td>Jour : &nbsp &nbsp</td>
+                    <td>@ViewBag.Creneau.Jour &nbsp &nbsp</td>
+                </tr>
+                <tr>
+                    <td>Heure : &nbsp &nbsp</td>
+                    <td>@ViewBag.Creneau.Heure &nbsp &nbsp</td>
+                </tr>
+                <tr>
+                    <td>Encadrant : &nbsp &nbsp</td>
+                    <td><a href="/Encadrant/Creneaux/@ViewBag.Encadrant.Id_Personne">@ViewBag.Encadrant.Prenom @ViewBag.Encadrant.Nom</a>&nbsp &nbsp</td>
+                </tr>
+                <tr>
+                    <td>Lieu : &nbsp &nbsp</td>
+                    <td>@ViewBag.Lieu.Nom</td>
+                </tr>
+                <tr>
+                    <td>Adresse : &nbsp &nbsp</td>
+                    <td>@ViewBag.Lieu.Adresse</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!--Le dossier à compléter-->
+    <div>
+        <h2>Mon dossier :</h2>
+        <!--TODO aller chercher les documents, s'ils sont validés et ceux à charger-->
+        <table>
+            <tr>
+                <td>Mon paiement : &nbsp &nbsp</td>
+                <td> Effectué</td>
+            </tr>
+            <tr>
+                <td>Ma fiche de renseignement : &nbsp &nbsp</td>
+                <!--si le document existe et est valide-->
+                @if (ViewBag.Renseignement != null && ViewBag.Renseignement.Est_Valide)
+                {
+                    <td>Document Valide</td>
+                }
+                else if (ViewBag.Renseignement != null && !ViewBag.Renseignement.Est_Valide)
+                {
+                    <!--si le document existe mais qu'il n'est pas encore valide-->
+                    <td>Document en cours de validation</td>
+                }
+                else
+                {
+                    <!--si le document n'a pas encore ete fourni par l'adherent-->
+                    <td>
+                        <input name="renseignement" type="file" accept=".pdf,.jpg" />
+                    </td>
+                }
+
+            </tr>
+            <tr>
+                <td>Mon attestation de responsabilité : &nbsp &nbsp</td>
+                @if (ViewBag.Assurance != null && ViewBag.Assurance.Est_Valide)
+                {
+                    <td>Document Valide</td>
+                }
+                else if (ViewBag.Assurance != null && !ViewBag.Assurance.Est_Valide)
+                {
+                    <td>Document en cours de validation</td>
+                }
+                else
+                {
+                    <td>
+                        <input name="assurance" type="file" accept=".pdf,.jpg" />
+                    </td>
+                }
+            </tr>
+            <tr>
+                <td> Mon certificat médical : &nbsp &nbsp</td>
+                @if (ViewBag.Certificat != null && ViewBag.Certificat.Est_Valide)
+                {
+                    <td>Document Valide</td>
+                }
+                else if (ViewBag.Certificat != null && !ViewBag.Certificat.Est_Valide)
+                {
+                    <td>Document en cours de validation</td>
+                }
+                else
+                {
+                    <td>
+                        <input name="assurance" type="file" accept=".pdf,.jpg" />
+                    </td>
+                }
+            </tr>
+        </table>
+    </div>
+   <br/>
+    <!--les actions possibles-->
+    <div>
+        <form action="/GestionA/ModifierCreneau/@ViewBag.Creneau.Id_Creneau">
+            <input type="submit" value="Modifier le créneau" />
+        </form>
+        <!-- l'action du formulaire est initialisée par la fonction confirmation()-->
+        <form id="choix" action="" method="post">
+            <input name="dossier" type="hidden" value="@ViewBag.Dossier.Id_Dossier" />
+            <input name="creneau" type="hidden" value="@ViewBag.Creneau.Id_Creneau" />
+            <input type="submit" value="Supprimer mon inscription" onclick="confirmation()" />
+        </form>
+
+    </div>
+    <br/>
+    Votre dossier n'est pas encore validé, vous pouvez encore apporter des modifications à cette inscription 
+</div>
+
+
+
 

@@ -219,6 +219,7 @@
     <Content Include="Views\GestionAdherent\ModifierMail.cshtml" />
     <Content Include="Views\GestionAdherent\ModifierTel.cshtml" />
     <Content Include="Views\Encadrant\Creneaux.cshtml" />
+    <Content Include="Views\GestionAdherent\ModifierCreneau.cshtml" />
     <Content Include="Views\InscriptionCreneau\Index.cshtml" />
     <Content Include="Views\InscriptionCreneau\Confirmation.cshtml" />
   </ItemGroup>
