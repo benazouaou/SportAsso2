@@ -81,11 +81,11 @@
             <tr>
                 <td>Ma fiche de renseignement : &nbsp &nbsp</td>
                 <!--si le document existe et est valide-->
-                @if (ViewBag.Renseignement != null && ViewBag.Renseignement.Est_Valide)
+                @if (ViewBag.Renseignement != null && ViewBag.Renseignement.Est_Valide == 1)
                 {
                     <td>Document Valide</td>
                 }
-                else if (ViewBag.Renseignement != null && !ViewBag.Renseignement.Est_Valide)
+                else if (ViewBag.Renseignement != null && ViewBag.Renseignement.Est_Valide == 0)
                 {
                     <!--si le document existe mais qu'il n'est pas encore valide-->
                     <td>Document en cours de validation</td>
@@ -101,11 +101,11 @@
             </tr>
             <tr>
                 <td>Mon attestation de responsabilité : &nbsp &nbsp</td>
-                @if (ViewBag.Assurance != null && ViewBag.Assurance.Est_Valide)
+                @if (ViewBag.Assurance != null && ViewBag.Assurance.Est_Valide == 1)
                 {
                     <td>Document Valide</td>
                 }
-                else if (ViewBag.Assurance != null && !ViewBag.Assurance.Est_Valide)
+                else if (ViewBag.Assurance != null && ViewBag.Assurance.Est_Valide == 0)
                 {
                     <td>Document en cours de validation</td>
                 }
@@ -118,11 +118,11 @@
             </tr>
             <tr>
                 <td> Mon certificat médical : &nbsp &nbsp</td>
-                @if (ViewBag.Certificat != null && ViewBag.Certificat.Est_Valide)
+                @if (ViewBag.Certificat != null && ViewBag.Certificat.Est_Valide == 1)
                 {
                     <td>Document Valide</td>
                 }
-                else if (ViewBag.Certificat != null && !ViewBag.Certificat.Est_Valide)
+                else if (ViewBag.Certificat != null && ViewBag.Certificat.Est_Valide == 0)
                 {
                     <td>Document en cours de validation</td>
                 }
