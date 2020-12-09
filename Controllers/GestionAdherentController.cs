@@ -265,6 +265,8 @@ namespace SportAsso.Controllers
                 {
                     foreach (var doc in docs as List<Document>)
                     {
+                        string path = doc.Path;
+                        System.IO.File.Delete(path);
                         context.Document.Remove(doc);
                     }
                     context.Dossier.Remove(dossier);
@@ -304,6 +306,7 @@ namespace SportAsso.Controllers
                 Dossier dossier = context.Dossier
                     .Where(d => d.Id_Dossier == id_dossier)
                     .FirstOrDefault();
+                ViewBag.DossierId = dossier.Id_Dossier;
 
                 //créer le document 
                 try
@@ -355,7 +358,7 @@ namespace SportAsso.Controllers
 
             }
 
-            return Redirect("/Account/UserPannel");
+            return Redirect("/Account/Preinscription/"+ViewBag.DossierId);
 
         }
 
