@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+@using (Html.BeginForm("Confirmation", "InscriptionCreneau", FormMethod.Post,
+                                        new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+ 
+    <span>
+        <a href="/">home></a><a href="/Discipline">Disciplines></a><a href="/Discipline/Section/@ViewBag.CreneauDiscipline">@ViewBag.CreneauDiscipline></a>
+        <a href="/Discipline/Creneau/@ViewBag.CreneauDiscipline/@ViewBag.SectionId">Creneau></a>
+        <a href="/InscriptionCreneau/Index/@ViewBag.idCreneau">Inscription</a>
+    </span>
+
+    <h2>Inscriptions a la section @ViewBag.SectionCreneau de la discipline @ViewBag.CreneauDiscipline:</h2>
+    <br>
+
+
+
+
+    <fieldset>
+        <legend>Créneau:</legend>
+        <table cellpadding="20">
+            <tr>
+                <th>Discipline &nbsp &nbsp</th>
+                <th>Section &nbsp &nbsp</th>
+                <th>Jour &nbsp &nbsp</th>
+                <th>Heure &nbsp &nbsp</th>
+                <th>Lieu &nbsp &nbsp</th>
+                <th>Adresse &nbsp &nbsp</th>
+                <th>Encadrant &nbsp &nbsp</th>
+                <th>Prix &nbsp &nbsp</th>
+            </tr>
+            <tr>
+                <td>@ViewBag.CreneauDiscipline &nbsp &nbsp </td>
+                <td>@ViewBag.SectionCreneau &nbsp &nbsp</td>
+                <td>@ViewBag.Creneau.Jour &nbsp &nbsp</td>
+                <td>@ViewBag.Creneau.Heure &nbsp &nbsp</td>
+                <td>@ViewBag.LieuCreneau &nbsp &nbsp</td>
+                <td>@ViewBag.AdresseCreneau &nbsp &nbsp</td>
+                <td>@ViewBag.Encadrant.Prenom @ViewBag.Encadrant.Nom &nbsp &nbsp</td>
+                <td>@ViewBag.PrixSection euros &nbsp &nbsp</td>
+
+            </tr>
+        </table>
+    </fieldset>
+    <br>
+
+
+    <fieldset>
+        <legend>Documents à fournir: </legend>
+        <div style="color:red">Type de fichiers autorisé: jpng, png, jpg, pdf, doc. </div>
+        <table>
+            @ViewBag.message
+
+            <tr>
+                <td>Fiche de renseignement</td>
+                <td><input id="files" type="file" name="nameFile" accept=".jpng,.png,.jpg,.pdf,.doc" /></td>
+                <td class="sorting_1">@Html.ActionLink("Model de fiche de renseignement", "Telecharger", new { fileName = "Fiche de renseignement.pdf" })</td>
+            </tr>
+            <tr>
+                <td>Attestation medicale</td>
+                <td><input id="files" type="file" name="nameFile" accept=".jpng,.png,.jpg,.pdf,.doc"/></td>
+            </tr>
+            <tr>
+                <td>Assurance de responsabilité civile</td>
+                <td><input id="files" type="file" name="nameFile" accept=".jpng,.png,.jpg,.pdf,.doc"/></td>
+            </tr>
+        </table>
+
+    </fieldset>
+    <br>
+
+
+    <fieldset>
+        <legend>Paiement:</legend>
+        <table>
+            <tr>
+                <td>Section @ViewBag.SectionCreneau &nbsp &nbsp</td>
+                <td>@ViewBag.PrixSection euros &nbsp &nbsp</td>
+            </tr>
+        </table>
+    </fieldset>
+    <br>
+
+    <a href="/InscriptionCreneau/Confirmation/@ViewBag.CreneauDiscipline/@ViewBag.SectionCreneau">
+        <input class="btn-success" type="submit" value="Payer" />
+    </a>
+
+
+}
+
+
+
+
+
+
+
+
+

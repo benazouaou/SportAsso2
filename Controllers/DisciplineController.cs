@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -43,7 +44,7 @@ namespace SportAsso.Controllers
 
             using (var context = new Context_db())
             {
-           
+
                 Section section = context.Section
                     .Where(c => c.Id_Section == id2)
                     .FirstOrDefault();
@@ -54,8 +55,22 @@ namespace SportAsso.Controllers
                 ViewBag.Section = section;
                 ViewBag.Discipline = id;
                 ViewBag.Creneaux = creneaux;
+
+                if (Session["P_id"] != null)
+                {
+                    int id_personne = (int)Session["P_id"];
+                    Dossier dossier = context.Dossier.Where(d => d.Personne_Id_Personne == id_personne && d.Section_Id_Section == section.Id_Section).SingleOrDefault();
+                    if (dossier != null)
+                    {
+                        ViewBag.dossier = dossier.Id_Dossier;
+                    }
+                }
             }
             return View();
         }
+
+
+
+      
     }
 }

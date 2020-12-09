@@ -19,7 +19,7 @@ namespace SportAsso.Models
         public int Dossier_Id_Dossier { get; set; }
 
         [Required]
-        public byte[] Fichier { get; set; }
+        public string Path { get; set; }
 
         public byte? Est_Valide { get; set; }
 
