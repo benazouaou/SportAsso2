@@ -203,6 +203,26 @@ namespace SportAsso.Controllers
                     .Where(e => e.Id_Personne == cr.Encadrant)
                     .FirstOrDefault();
                 ViewBag.Encadrant = encadrant;
+                //récupération des documents du dossier
+                List<Document> documents = context.Document
+                     .Where(d => d.Dossier_Id_Dossier == dossier.Id_Dossier)
+                     .ToList();
+                foreach(Document document in documents as List<Document>)
+                {
+                    switch(document.Type_Document)
+                    {
+                        case "Assurance de responsabilité":
+                            ViewBag.Assurance = document;
+                            break;
+                        case "Attestation medicale":
+                            ViewBag.Certificat = document;
+                            break;
+                        case "Fiche de renseignement":
+                            ViewBag.Renseignement = document;
+                            break;
+                    }
+                }
+                    
             }
             return View();
         }

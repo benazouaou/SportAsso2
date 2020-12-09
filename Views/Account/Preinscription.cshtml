@@ -17,7 +17,7 @@
             //si le bouton oui est cliqué le formulaire prend une action qui exécute la suppression du dossier
             choix.setAttribute("action", "/GestionA/SupprimerDossier");
         } else {
-            //sinon l'action du formulaire renvoi à la même page, il ne se passe rien
+            //sinon l'action du formulaire renvoi à la même page en utilisant la méthtode get, il ne se passe rien dans la base de données
             choix.setAttribute("action", "");
             choix.setAttribute("method", "get");
         }
@@ -68,13 +68,75 @@
             </table>
         </div>
     </div>
+
     <!--Le dossier à compléter-->
     <div>
         <h2>Mon dossier :</h2>
         <!--TODO aller chercher les documents, s'ils sont validés et ceux à charger-->
+        <table>
+            <tr>
+                <td>Mon paiement : &nbsp &nbsp</td>
+                <td> Effectué</td>
+            </tr>
+            <tr>
+                <td>Ma fiche de renseignement : &nbsp &nbsp</td>
+                <!--si le document existe et est valide-->
+                @if (ViewBag.Renseignement != null && ViewBag.Renseignement.Est_Valide)
+                {
+                    <td>Document Valide</td>
+                }
+                else if (ViewBag.Renseignement != null && !ViewBag.Renseignement.Est_Valide)
+                {
+                    <!--si le document existe mais qu'il n'est pas encore valide-->
+                    <td>Document en cours de validation</td>
+                }
+                else
+                {
+                    <!--si le document n'a pas encore ete fourni par l'adherent-->
+                    <td>
+                        <input name="renseignement" type="file" accept=".pdf,.jpg" />
+                    </td>
+                }
+
+            </tr>
+            <tr>
+                <td>Mon attestation de responsabilité : &nbsp &nbsp</td>
+                @if (ViewBag.Assurance != null && ViewBag.Assurance.Est_Valide)
+                {
+                    <td>Document Valide</td>
+                }
+                else if (ViewBag.Assurance != null && !ViewBag.Assurance.Est_Valide)
+                {
+                    <td>Document en cours de validation</td>
+                }
+                else
+                {
+                    <td>
+                        <input name="assurance" type="file" accept=".pdf,.jpg" />
+                    </td>
+                }
+            </tr>
+            <tr>
+                <td> Mon certificat médical : &nbsp &nbsp</td>
+                @if (ViewBag.Certificat != null && ViewBag.Certificat.Est_Valide)
+                {
+                    <td>Document Valide</td>
+                }
+                else if (ViewBag.Certificat != null && !ViewBag.Certificat.Est_Valide)
+                {
+                    <td>Document en cours de validation</td>
+                }
+                else
+                {
+                    <td>
+                        <input name="assurance" type="file" accept=".pdf,.jpg" />
+                    </td>
+                }
+            </tr>
+        </table>
     </div>
-   
-    <!--actions possibles-->
+   <br/>
+    <!--les actions possibles-->
     <div>
         <form action="/GestionA/ModifierCreneau/@ViewBag.Creneau.Id_Creneau">
             <input type="submit" value="Modifier le créneau" />
@@ -87,7 +149,8 @@
         </form>
 
     </div>
-    Votre dossier n'est pas encore validé, vous pouvez encore apporter des modifications à cette inscription '
+    <br/>
+    Votre dossier n'est pas encore validé, vous pouvez encore apporter des modifications à cette inscription 
 </div>
 
 
