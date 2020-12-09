@@ -211,7 +211,7 @@ namespace SportAsso.Controllers
                 {
                     switch(document.Type_Document)
                     {
-                        case "Assurance de responsabilité":
+                        case "Assurance de responsabilité civile":
                             ViewBag.Assurance = document;
                             break;
                         case "Attestation medicale":
@@ -222,8 +222,10 @@ namespace SportAsso.Controllers
                             break;
                     }
                 }
-                    
+                Session["id_dossier"] = dossier.Id_Dossier;
+                Session["S_id"] = section.Id_Section;
             }
+            
             return View();
         }
 

@@ -7,6 +7,8 @@
     ViewBag.Title = "Preinscription";
 }
 
+
+
 <!-- fonction appelée lorsque l'utilisateur choisi de supprimer son dossier-->
 <script>
     function confirmation() {
@@ -93,28 +95,17 @@
                 else
                 {
                     <!--si le document n'a pas encore ete fourni par l'adherent-->
-                    <td>
-                        <input name="renseignement" type="file" accept=".pdf,.jpg" />
-                    </td>
+                    using (Html.BeginForm("ModificationDoc", "GestionA", FormMethod.Post,
+                                        new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <td>
+                            <input id="files" type="file" name="renseignement" accept=".jpng,.png,.jpg,.pdf,.doc" />
+                        </td>
+                        <td><input type="submit" value="envoyer" /></td>
+                    }
                 }
 
-            </tr>
-            <tr>
-                <td>Mon attestation de responsabilité : &nbsp &nbsp</td>
-                @if (ViewBag.Assurance != null && ViewBag.Assurance.Est_Valide == 1)
-                {
-                    <td>Document Valide</td>
-                }
-                else if (ViewBag.Assurance != null && ViewBag.Assurance.Est_Valide == 0)
-                {
-                    <td>Document en cours de validation</td>
-                }
-                else
-                {
-                    <td>
-                        <input name="assurance" type="file" accept=".pdf,.jpg" />
-                    </td>
-                }
             </tr>
             <tr>
                 <td> Mon certificat médical : &nbsp &nbsp</td>
@@ -128,14 +119,44 @@
                 }
                 else
                 {
-                    <td>
-                        <input name="assurance" type="file" accept=".pdf,.jpg" />
-                    </td>
+                    using (Html.BeginForm("ModificationDoc", "GestionA", FormMethod.Post,
+                                        new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <td>
+                            <input id="files" type="file" name="medical" accept=".jpng,.png,.jpg,.pdf,.doc" />
+                        </td>
+                        <td><input type="submit" value="envoyer"/></td>
+                    }
+                }
+                </tr>
+            <tr>
+                <td>Mon attestation de responsabilité : &nbsp &nbsp</td>
+                @if (ViewBag.Assurance != null && ViewBag.Assurance.Est_Valide == 1)
+                {
+                    <td>Document Valide</td>
+                }
+                else if (ViewBag.Assurance != null && ViewBag.Assurance.Est_Valide == 0)
+                {
+                    <td>Document en cours de validation</td>
+                }
+                else
+                {
+                    using (Html.BeginForm("ModificationDoc", "GestionA", FormMethod.Post,
+                                        new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <td>
+                            <input id="files" type="file" name="responsabilite" accept=".jpng,.png,.jpg,.pdf,.doc" />
+                        </td>
+                        <td><input type="submit" value="envoyer" /></td>
+                    }
                 }
             </tr>
+
         </table>
     </div>
-   <br/>
+    <br />
     <!--les actions possibles-->
     <div>
         <form action="/GestionA/ModifierCreneau/@ViewBag.Creneau.Id_Creneau">
@@ -149,9 +170,10 @@
         </form>
 
     </div>
-    <br/>
-    Votre dossier n'est pas encore validé, vous pouvez encore apporter des modifications à cette inscription 
+    <br />
+    Votre dossier n'est pas encore validé, vous pouvez encore apporter des modifications à cette inscription
 </div>
+
 
 
 

@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web;
 using SportAsso.Models;
 using System.Collections.Generic;
+using System.IO;
 
 
 namespace SportAsso.Controllers
@@ -64,8 +65,8 @@ namespace SportAsso.Controllers
                         Personne personne = context.Personne
                             .Where(pe => pe.Id_Personne == Id)
                             .FirstOrDefault();
-                        personne.Mot_de_Passe = (string) nouveau;
-                        personne.Confirm_Mot_Passe = (string) nouveau;
+                        personne.Mot_de_Passe = (string)nouveau;
+                        personne.Confirm_Mot_Passe = (string)nouveau;
                         context.SaveChanges();
                         return Redirect("/Account/UserPannel");
                     }
@@ -79,7 +80,7 @@ namespace SportAsso.Controllers
                                 Response.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
                             }
                         }
-                    } 
+                    }
                 }
             }
             return View();
@@ -99,11 +100,11 @@ namespace SportAsso.Controllers
             int Id = (int)Session["P_id"];
             var error = false;
 
-           if (nouveau != nouveauConf || nouveau == "")
-           {
-               error = true;
-               ViewBag.Nouveau = "Les deux mots de passe sont différents ou vides";
-           }
+            if (nouveau != nouveauConf || nouveau == "")
+            {
+                error = true;
+                ViewBag.Nouveau = "Les deux mots de passe sont différents ou vides";
+            }
 
             if (error == false)
             {
@@ -114,7 +115,7 @@ namespace SportAsso.Controllers
                         Personne personne = context.Personne
                             .Where(pe => pe.Id_Personne == Id)
                             .FirstOrDefault();
-                        personne.E_mail = (string) nouveau;
+                        personne.E_mail = (string)nouveau;
                         context.SaveChanges();
                         return Redirect("/Account/UserPannel");
                     }
@@ -188,15 +189,15 @@ namespace SportAsso.Controllers
         [HttpGet]
         public ActionResult ModifierCreneau(int id)
         {
-            using(var context = new Context_db())
+            using (var context = new Context_db())
             {
                 Creneau creneau = context.Creneau
                     .Where(c => c.Id_Creneau == id)
                     .FirstOrDefault();
                 ViewBag.Creneau = creneau;
-                 List<Creneau> creneaux = context.Creneau
-                    .Where(c => c.Section_Id_Section == creneau.Section_Id_Section)
-                    .ToList();
+                List<Creneau> creneaux = context.Creneau
+                   .Where(c => c.Section_Id_Section == creneau.Section_Id_Section)
+                   .ToList();
                 ViewBag.Creneaux = creneaux;
             }
             return View();
@@ -229,7 +230,7 @@ namespace SportAsso.Controllers
                 }
                 catch (System.Data.Entity.Validation.DbEntityValidationException ex)
                 {
-                    
+
                     foreach (var entityValidationErrors in ex.EntityValidationErrors)
                     {
                         foreach (var validationError in entityValidationErrors.ValidationErrors)
@@ -246,7 +247,7 @@ namespace SportAsso.Controllers
         {
             var dossierId = int.Parse(Request.Form["dossier"]);
             var creneauId = int.Parse(Request.Form["creneau"]);
-            using(var context = new Context_db())
+            using (var context = new Context_db())
             {
                 Dossier dossier = context.Dossier
                     .Where(d => d.Id_Dossier == dossierId)
@@ -264,9 +265,10 @@ namespace SportAsso.Controllers
                     creneau.Nombre_Places_Dispo = creneau.Nombre_Places_Dispo + 1;
                     context.SaveChanges();
 
-                } catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException ex)
                 {
-                    
+
                     foreach (var entityValidationErrors in ex.EntityValidationErrors)
                     {
                         foreach (var validationError in entityValidationErrors.ValidationErrors)
@@ -278,7 +280,78 @@ namespace SportAsso.Controllers
             }
             return Redirect("/Account/UserPannel");
         }
-    }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken] // permet d'empêcher les attaques de falsification de requêtes intersites
+        public ActionResult ModificationDoc()
+        {
+            HttpPostedFileBase responsabilite = Request.Files["responsabilite"];
+            HttpPostedFileBase renseignement = Request.Files["renseignement"];
+            HttpPostedFileBase medical = Request.Files["medical"];
+            using (var context = new Context_db())
+            {
+                //récupérer le nom du dossier
+                int id_dossier = (int) Session["id_dossier"];
+                int Id = (int) Session["P_id"];
+                Dossier dossier = context.Dossier
+                    .Where(d => d.Id_Dossier == id_dossier)
+                    .FirstOrDefault();
+
+                //créer le document 
+                try
+                {
+                string typeDoc;
+                string fileExtension;
+                HttpPostedFileBase nameFile;
+                    if (renseignement != null)
+                    {
+                        typeDoc = "Fiche de renseignement";
+                        fileExtension = Path.GetExtension(renseignement.FileName);
+                        nameFile = renseignement;
+                    }
+                    else if (medical != null)
+                    {
+                        typeDoc = "Attestation medicale";
+                        fileExtension = Path.GetExtension(medical.FileName);
+                        nameFile = medical;
+                    }
+                    else
+                    {
+                        typeDoc = "Assurance de responsabilité civile";
+                        fileExtension = Path.GetExtension(responsabilite.FileName);
+                        nameFile = responsabilite;
+                    }
+
+                //l'ajout dans le dossier Files
+                string name = Session["P_id"] + "_" + Session["S_id"] + "_" + typeDoc + fileExtension;
+
+                string path = Path.Combine(Server.MapPath("~/Files"), Path.GetFileName(nameFile.FileName.Replace(nameFile.FileName, name)));
+
+                            nameFile.SaveAs(path);
+
+                    //l'ajout dans la base de données
+                    Document doc = new Document();
+                    doc.Dossier_Id_Dossier = dossier.Id_Dossier;
+                    doc.Type_Document = typeDoc;
+                    doc.Path = path;
+                    doc.Est_Valide = 0;
+                    context.Document.Add(doc);
+                    context.SaveChanges();
+                }
+
+                        catch (Exception ex)
+                        {
+                            ViewBag.message = "Erreur !" + ex;
+                        }
+                
+
+            }
+
+            return Redirect("/Account/UserPannel");
+
+        }
+
+        }
 
     }
