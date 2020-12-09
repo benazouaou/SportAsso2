@@ -258,8 +258,15 @@ namespace SportAsso.Controllers
                 Personne adherent = context.Personne
                     .Where(p => p.Id_Personne == dossier.Personne_Id_Personne)
                     .FirstOrDefault();
+                List<Document> docs = context.Document
+                    .Where(d => d.Dossier_Id_Dossier == dossier.Id_Dossier)
+                    .ToList();
                 try
                 {
+                    foreach (var doc in docs as List<Document>)
+                    {
+                        context.Document.Remove(doc);
+                    }
                     context.Dossier.Remove(dossier);
                     adherent.Creneau1.Remove(creneau);
                     creneau.Nombre_Places_Dispo = creneau.Nombre_Places_Dispo + 1;
