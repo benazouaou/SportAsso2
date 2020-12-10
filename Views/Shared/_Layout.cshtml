@@ -37,8 +37,27 @@
                     }
                     else
                     {
-                        <!--affiche le bouton pour s'inscrire et celui pour se connecter-->
-                        <li><a href="/Account/UserPannel" class="scroll">@Session["nom"]</a></li>
+                        <!--recupere les roles de l'utilisateur-->
+                        using (var context = new SportAsso.Models.Context_db())
+                        {
+                            int id = (int)Session["P_id"];
+
+                            SportAsso.Models.Personne Pl = context.Personne
+                                .Where(x => x.Id_Personne == id)
+                                .SingleOrDefault();
+                            <!--si l'utilisateur est un admin-->
+                            if (Pl.Role.Any(s => s.Nom_Role == "Admin"))
+                            {
+                                <!--met un lien a son nom vers l'espace admin-->
+                                <li><a href="/Admin/Index" class="scroll">@Session["nom"]</a></li>
+                            }
+                            else
+                            {
+                                <!--sinon met un lien a son nom vers l'espace adherent-->
+                                <li><a href="/Account/UserPannel" class="scroll">@Session["nom"]</a></li>
+                            }
+                        }
+                        <!--ajoute un lien pour se deconnecter-->
                         <li>@Html.ActionLink("Se Déconnecter", "Logout", "Account")</li>
                     }
                 </ul>
