@@ -1,14 +1,13 @@
 ﻿@model IEnumerable<SportAsso.Models.Dossier>
-
+<!--cette vue est emboitee dans un layout qui contient la barre de navigation de l'espace admin
+lui meme imbrique dans le layout general du site-->
 @{
-
     Layout = "~/Views/Shared/LayoutAdminPannel.cshtml";
-
 }
 
-<h2>Inscription</h2>
-
-
+<!--cette vue permet a un administrateur de voir l'ensemble des dossiers d'inscription valides-->
+<h2>Inscriptions</h2>
+<br />
 <table class="table">
     <tr>
         <th>
@@ -24,52 +23,53 @@
         <th></th>
     </tr>
 
-@foreach (var dossier in ViewBag.DossiersPre as List<SportAsso.Models.Dossier>) {
-
-
-    using (var context = new SportAsso.Models.Context_db())
+    <!--parcours tous les dossiers valides envoyes par le controller-->
+    @foreach (var dossier in ViewBag.DossiersPre as List<SportAsso.Models.Dossier>)
     {
+        //recupere les informations contenant la personne a qui appartient le dossier, la section et la discipline auxquelles il est rattache
+        using (var context = new SportAsso.Models.Context_db())
+        {
 
-        var personne = context.Personne.Where(p => p.Id_Personne == dossier.Personne_Id_Personne).FirstOrDefault();
-        ViewBag.personneNom = personne.Nom;
-        ViewBag.personnePrenom = personne.Prenom;
-
-
-
-        var section = context.Section.Where(s => s.Id_Section == dossier.Section_Id_Section).FirstOrDefault();
-        ViewBag.section = section.Nom;
-
-        var discipline = context.Discipline.Where(d => d.Id_Discipline == section.Discipline_Id_Discipline).FirstOrDefault();
-        ViewBag.discipline = discipline.Nom_Discipline;
+            var personne = context.Personne
+                .Where(p => p.Id_Personne == dossier.Personne_Id_Personne)
+                .FirstOrDefault();
+            ViewBag.personneNom = personne.Nom;
+            ViewBag.personnePrenom = personne.Prenom;
 
 
+            var section = context.Section
+                .Where(s => s.Id_Section == dossier.Section_Id_Section)
+                .FirstOrDefault();
+            ViewBag.section = section.Nom;
 
+            var discipline = context.Discipline
+                .Where(d => d.Id_Discipline == section.Discipline_Id_Discipline)
+                .FirstOrDefault();
+            ViewBag.discipline = discipline.Nom_Discipline;
 
-        var cr = context.Creneau.Where(c => c.Section_Id_Section == section.Id_Section && (c.Personne1.Any(s => s.Id_Personne == personne.Id_Personne))).SingleOrDefault();
-        ViewBag.jour = cr.Jour;
-        ViewBag.heure = cr.Heure;
-
-
+            var cr = context.Creneau
+                .Where(c => c.Section_Id_Section == section.Id_Section && (c.Personne1.Any(s => s.Id_Personne == personne.Id_Personne)))
+                .SingleOrDefault();
+            ViewBag.jour = cr.Jour;
+            ViewBag.heure = cr.Heure;
+        }
+        <tr>
+            <td>
+                @ViewBag.personneNom @ViewBag.personnePrenom
+            </td>
+            <td>
+                @ViewBag.discipline
+            </td>
+            <td>
+                @ViewBag.section
+            </td>
+            <td>
+                @ViewBag.jour @ViewBag.heure
+            </td>
+            <td>
+                <!--lien redirigeant vers la page du dossier choisi-->
+                @Html.ActionLink("Detail", "DetailInscription", new { id = dossier.Id_Dossier }) |
+            </td>
+        </tr>
     }
-    <tr>
-        <td>
-            @ViewBag.personneNom @ViewBag.personnePrenom
-        </td>
-        <td>
-            @ViewBag.discipline
-        </td>
-        <td>
-            @ViewBag.section
-        </td>
-        <td>
-            @ViewBag.jour @ViewBag.heure
-        </td>
-        <td>
-            
-            @Html.ActionLink("Detail", "DetailInscription", new { id= dossier.Id_Dossier }) |
-            
-        </td>
-    </tr>
-}
-
 </table>

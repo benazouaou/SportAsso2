@@ -1,12 +1,11 @@
 ﻿
 @{
-
     Layout = "~/Views/Shared/LayoutAdminPannel.cshtml";
-
-
-
 }
+<!--cette vue est emboitee dans un layout qui contient la barre de navigation de l'espace admin
+lui meme imbrique dans le layout general du site-->
 
+<!--page principale de l'espace personnel de l'admin-->
 <h1>Mes informations personnelles</h1>
 
 <table>
@@ -17,7 +16,6 @@
     <tr>
         <td>Prenom : &nbsp &nbsp</td>
         <td>@ViewBag.Personne.Prenom &nbsp &nbsp</td>
-
     </tr>
     <tr>
         <td>Date de naissance : &nbsp &nbsp</td>
@@ -27,6 +25,7 @@
         <td>Email : &nbsp &nbsp</td>
         <td>@ViewBag.Personne.E_mail &nbsp &nbsp</td>
         <td>
+            <!--formulaire sans input qui renvoi vers une page pour saisir sa nouvelle adresse mail-->
             <form action="/GestionA/ModifierMail">
                 <input type="submit" value="Modifer" />
             </form>
@@ -36,6 +35,7 @@
         <td>Numéro de téléphone : &nbsp &nbsp</td>
         <td>@ViewBag.Personne.Num_Telephone &nbsp &nbsp</td>
         <td>
+            <!--formulaire sans input qui renvoi vers une page pour saisir son nouveau numero de telephone-->
             <form action="/GestionA/ModifierTel">
                 <input type="submit" value="Modifer" />
             </form>
@@ -45,6 +45,7 @@
         <td>Mot de passe : &nbsp &nbsp</td>
         <td>******** &nbsp &nbsp</td>
         <td>
+            <!--formulaire sans input qui renvoi vers une page pour saisir son nouveau mot de passe-->
             <form action="/GestionA/ModifierMdp">
                 <input type="submit" value="Modifer" />
             </form>

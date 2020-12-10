@@ -57,8 +57,8 @@
                     <td>@creneau.Nombre_Places_Dispo &nbsp &nbsp</td>
                     <td>@creneau.Nombre_Places_Max &nbsp &nbsp</td>
 
-                    <!--si l'utilisateur est connecte (adherent) et s'il n'a pas deja un dossier d'inscription pour un des creneaux-->
-                    @if (Session["P_id"] != null && ViewBag.dossier == null)
+                    <!--si l'utilisateur n'est connecte, qu'il n'a pas le role admin et s'il n'a pas deja un dossier d'inscription pour un des creneaux-->
+                    @if (Session["P_id"] != null && Session["Admin"] == null && ViewBag.dossier == null)
                     {
                         //si le nombre de place vaut 0 affiche le creneau comme complet
                         if (creneau.Nombre_Places_Dispo == 0)

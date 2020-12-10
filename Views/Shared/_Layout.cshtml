@@ -1,7 +1,8 @@
-﻿<!DOCTYPE html>
+﻿<!--layout qui genere la barre de navigation principale du site et dans lequel les vues sont inscrustrees-->
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mon application ASP.NET</title>
@@ -12,6 +13,7 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
+                <!--bouton sporAsso qui renvoi a la page d'accueil-->
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -21,49 +23,44 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <!--les boutons disciplines encadrants et contact qui renvoient aux pages correspondantes-->
+                    <li>@Html.ActionLink("Disciplines", "Index", "Discipline")</li>
+                    <li>@Html.ActionLink("Encadrants", "Index", "Encadrant")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
 
-
-
-                   
+                    <!--si l'utilisateur est connecte-->
+                    @if (Session["P_id"] == null)
                     {
-
-                        <li>@Html.ActionLink("Disciplines", "Index", "Discipline")</li>
-                        <li>@Html.ActionLink("Encadrants", "Index", "Encadrant")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-
-
-
-
-                        @if (Session["P_id"] == null)
+                        <!--affiche le lien vers son espace personnel et le bouton de deconnexion-->
+                        <li>@Html.ActionLink("S'inscrire", "Register", "Account")</li>
+                        <li>@Html.ActionLink("Se Connecter", "Login", "Account")</li>
+                    }
+                    else
+                    {
+                        <!--recupere les roles de l'utilisateur-->
+                        using (var context = new SportAsso.Models.Context_db())
                         {
+                            int id = (int)Session["P_id"];
 
-                            <li>@Html.ActionLink("S'inscrire", "Register", "Account")</li>
-                            <li>@Html.ActionLink("Se Connecter", "Login", "Account")</li>
-
-                        }
-                        else
-                        {
-
-
-                            using (var context = new SportAsso.Models.Context_db())
+                            SportAsso.Models.Personne Pl = context.Personne
+                                .Where(x => x.Id_Personne == id)
+                                .SingleOrDefault();
+                            <!--si l'utilisateur est un admin-->
+                            if (Pl.Role.Any(s => s.Nom_Role == "Admin"))
                             {
-                                int id = (int)Session["P_id"];
-                                SportAsso.Models.Personne Pl = context.Personne.Where(x => x.Id_Personne == id).SingleOrDefault();
-                                if (Pl.Role.Any(s => s.Nom_Role == "Admin"))
-                                {
-                                    <li><a href="/Admin/Index" class="scroll">@Session["nom"]</a></li>
-                                }
-                                else
-                                {
-                                    <li><a href="/Account/UserPannel" class="scroll">@Session["nom"]</a></li>
-
-                                }
-
+                                <!--met un lien a son nom vers l'espace admin-->
+                                <li><a href="/Admin/Index" class="scroll">@Session["nom"]</a></li>
                             }
-                            <li>@Html.ActionLink("Se Déconnecter", "Logout", "Account")</li>
-
+                            else
+                            {
+                                <!--sinon met un lien a son nom vers l'espace adherent-->
+                                <li><a href="/Account/UserPannel" class="scroll">@Session["nom"]</a></li>
+                            }
                         }
-                    </ul>
+                        <!--ajoute un lien pour se deconnecter-->
+                        <li>@Html.ActionLink("Se Déconnecter", "Logout", "Account")</li>
+                    }
+                </ul>
             </div>
         </div>
     </div>
@@ -74,7 +71,6 @@
             <p>&copy; @DateTime.Now.Year - Mon application ASP.NET</p>
         </footer>
     </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
