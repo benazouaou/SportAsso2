@@ -13,17 +13,24 @@ namespace SportAsso.Controllers
         {
             using (var context = new SportAsso.Models.Context_db())
             {
-
+                //si l'authentification a echoue, renvoi sur la page de connexion
                 if (Session["P_id"] == null)
                 {
                     return RedirectToAction("Login");
                 }
+                //sinon recupere l'id de session
                 int id = (int)Session["P_id"];
+
+                //recupere l'admin
                 Personne personne = context.Personne
-                .Where(p => p.Id_Personne == id)
-                .FirstOrDefault();
+                    .Where(p => p.Id_Personne == id)
+                    .FirstOrDefault();
+
+                //envoie la personne a la vue
                 ViewBag.Personne = personne;
             }
+
+            //retourne la vue de l'accueil de l'espace admin
             return View();
         }
 
@@ -56,16 +63,22 @@ namespace SportAsso.Controllers
         public ActionResult Detail(int id)
         {
 
-            Dossier d = db.Dossier.Where(s => s.Id_Dossier == id).SingleOrDefault();
+            Dossier d = db.Dossier
+                .Where(s => s.Id_Dossier == id)
+                .SingleOrDefault();
+            ViewBag.DossierId = d.Id_Dossier;
 
-
-            var personne = db.Personne.Where(p => p.Id_Personne == d.Personne_Id_Personne).FirstOrDefault();
+            var personne = db.Personne
+                .Where(p => p.Id_Personne == d.Personne_Id_Personne)
+                .FirstOrDefault();
             ViewBag.personneNom = personne.Nom;
             ViewBag.personnePrenom = personne.Prenom;
 
 
 
-            var section = db.Section.Where(s => s.Id_Section == d.Section_Id_Section).FirstOrDefault();
+            var section = db.Section
+                .Where(s => s.Id_Section == d.Section_Id_Section)
+                .FirstOrDefault();
             ViewBag.section = section.Nom;
 
             var discipline = db.Discipline.Where(s => s.Id_Discipline == section.Discipline_Id_Discipline).FirstOrDefault();
@@ -245,8 +258,14 @@ namespace SportAsso.Controllers
             //recupere l'id du dossier dans le formulaire
             int id = int.Parse(Request.Form["id"]);
 
-            
-            return RedirectToAction("/Admin/Index");
+            Dossier d = db.Dossier
+                .Where(dos => dos.Id_Dossier == id)
+                .FirstOrDefault();
+
+            d.Est_Valide = true;
+            db.SaveChanges();
+
+            return Redirect("/Admin");
         }
     }
 }
