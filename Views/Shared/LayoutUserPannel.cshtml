@@ -48,7 +48,7 @@
 
     }
                 <br/>
-                <nav class="nav  flex-column" style="width:190px; padding:15px; background-color:lightgray">
+                <nav class="nav  flex-column" style="width:190px; padding:15px; background-color:lightgray; float:left; margin-right:30px">
 
                     <!--responsive
                          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#responsive">
@@ -145,5 +145,9 @@
                     </div>
                 </nav>
 
-                @RenderBody()
+                <div style="display: inline-block">
+                    @RenderBody()
+                </div>
+
+               
 </body>

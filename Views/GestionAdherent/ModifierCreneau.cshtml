@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "ModifierCreneau";
 }
-
+<!--vue affichant la page permettant a un adherent de choisir un autre creneau pour une preinscription-->
 <h2>Choisir un nouveau créneau</h2>
 
 <div>
@@ -11,9 +11,10 @@
 <br/>
 
 <table>
+    <!--parcours tous les creneaux de la section qui ont ete recuperes par le controller-->
     @foreach(var creneau in ViewBag.Creneaux as List<SportAsso.Models.Creneau>)
     {
-        //n'affiche que ceux disponibles
+        //n'affiche que ceux qui ont encore des places discponibles
         if(creneau.Nombre_Places_Dispo > 0)
         {
             //récupère le lieu et encadrant du créneau
@@ -29,15 +30,18 @@
                 ViewBag.Encadrant = encadrant;
             }
             <tr>
-                <!--infos du creneau-->
+                <!--affiche les infos du creneau-->
                 <td>@creneau.Jour  &nbsp @creneau.Heure  &nbsp @ViewBag.Encadrant.Prenom  &nbsp @ViewBag.Encadrant.Nom  &nbsp @ViewBag.Lieu.Nom  &nbsp @ViewBag.Lieu.Adresse &nbsp &nbsp</td>
-
+                <!--si le creneau est celui auquel l'adherent est deja inscrit-->
                 @if(creneau.Id_Creneau == ViewBag.Creneau.Id_Creneau)
                 {
                 <td>Ceci est votre créneau actuel</td>
                 } else
                 {
+                <!--si c'est un autre creneau-->
                 <td>
+                    <!--formulaire avec deux inputs caches qui sont les informations relatives au creanu
+                        et un bouton submit qui appelle une methode permettant de changer la reservation du creneau pour celui choisi-->
                     <form action="/GestionA/ModifierCreneau" method="post">
                         <input type="hidden" value="@creneau.Id_Creneau" name="nouveau"/>
                         <input type="hidden" value="@ViewBag.Creneau.Id_Creneau" name="ancien"/>

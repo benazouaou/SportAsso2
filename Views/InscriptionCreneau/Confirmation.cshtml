@@ -2,20 +2,18 @@
 @{
     ViewBag.Title = "Confirmation";
 }
+<!--vue affichant un message de confirmation lorsque l'inscription a un creneau s'est bien passeee-->
 
-   
-
-<h3>Confiramtion de la préinscription a la section @ViewBag.Section de la discipline @ViewBag.Discipline</h3>
+<h3>Confirmation de la pré-inscription à la section @ViewBag.Section.Nom de la discipline @ViewBag.Discipline.Nom_Discipline</h3>
 <div>
 
     <p>
-        Votre préinscription a la section @ViewBag.Section de la discipline @ViewBag.Discipline a bien été prise en compte,
-        une fois tous vos documents validé par un membre du bureau d'administration vous serez officiellement inscripts.
+        Votre pré-inscription à la section @ViewBag.Section.Nom de la discipline @ViewBag.Discipline.Nom_Discipline a bien été prise en compte,
+        une fois tous vos documents validés par un membre du bureau d'administration vous serez officiellement inscrit au créneau que vous avez choisi.
     </p>
 
-    <p>Votre dossier est accessible dans votre espace personnel</p>
-
-
+    <!--message lui fournissant le lien vers son espace personnel pour consulter sa nouvelle pre inscription-->
+    <p>Vous pouvez consultez ou modifier votre dossier dans votre <a href="/Account/UserPannel" class="scroll">espace personnel</a></p>
 
 </div>
 

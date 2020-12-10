@@ -2,12 +2,23 @@
 @{
     ViewBag.Title = "Crenaux";
 }
-
+<<!--une vue qui affiche tous les creneaux dont s'occupe un encadrant et son adresse mail pour le contacter-->
 <div class="row">
-    <span><a href="/">home></a><a href="/Encadrant">Encadrants></a>
-                               <a href="/Encadrant/Creneaux/@ViewBag.Encadrant">@ViewBag.EncadrantNom @ViewBag.EncadrantPrenom</a></span>
+    <!--arbre de navigation permettant de remonter dans les pages qui ont conduit a celle ci (page d'accueil et page de tous les encadrants)-->
+    <span>
+        <a href="/">home></a><a href="/Encadrant">Encadrants></a>
+        <a href="/Encadrant/Creneaux/@ViewBag.Encadrant">@ViewBag.EncadrantNom @ViewBag.EncadrantPrenom</a>
+    </span>
+
     <div class="col-md-12">
+        <h2>Contacter l'encadrant @ViewBag.EncadrantNom @ViewBag.EncadrantPrenom </h2>
+
+        <div>
+            E mail :  @ViewBag.EncadrantMail
+        </div>
+
         <h2>Creneaux de l'encadrant @ViewBag.EncadrantNom @ViewBag.EncadrantPrenom </h2>
+
         <table cellpadding="20">
             <tr>
                 <th>Discipline &nbsp &nbsp</th>
@@ -20,14 +31,12 @@
                 <th>Places maximum &nbsp &nbsp</th>
 
             </tr>
+            <!--parcours tous les creneaux de l'encadrant recuperes par le controller et affiche les informations-->
             @foreach (var creneau in ViewBag.Creneaux as List<SportAsso.Models.Creneau>)
             {
-
+                <!--recupere les informations sur le lieu la discipline et la section associes au creneau-->
                 using (var db = new SportAsso.Models.Context_db())
                 {
-                    var encadrant = db.Personne
-                        .Where(p => p.Id_Personne == creneau.Encadrant)
-                        .FirstOrDefault();
                     var lieu = db.Lieu
                         .Where(l => l.Id_Lieu == creneau.Lieu_Id_Lieu)
                         .FirstOrDefault();
@@ -39,15 +48,15 @@
                         .Where(d => d.Id_Discipline == section.Discipline_Id_Discipline)
                         .FirstOrDefault();
 
-                    ViewBag.Encadrant = encadrant;
                     ViewBag.Lieu = lieu;
                     ViewBag.Section = section;
                     ViewBag.Discipline = discipline;
                 }
+
                 <tr>
                     <td>@ViewBag.Discipline.Nom_Discipline &nbsp &nbsp</td>
                     <td>@creneau.Section.Nom &nbsp &nbsp</td>
-                    <td>@creneau.Jour &nbsp &nbsp</td>        
+                    <td>@creneau.Jour &nbsp &nbsp</td>
                     <td>@creneau.Heure &nbsp &nbsp</td>
                     <td>@ViewBag.Lieu.Nom &nbsp &nbsp</td>
                     <td>@ViewBag.Lieu.Adresse &nbsp &nbsp</td>

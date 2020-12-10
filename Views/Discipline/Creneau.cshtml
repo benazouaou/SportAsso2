@@ -3,14 +3,16 @@
     ViewBag.Title = "Creneau";
    
 }
-
+<!--vue qui affiche tous les creneaux existants dans la section a laquelle il se rapporte-->
 <div class="row">
     <div class="col-md-12">
+        <!--arbre de navigation permettant de remonter dans les pages qui ont conduit a celle ci (discipline et section correspondantes)-->
         <span><a href="/">home></a><a href="/Discipline">Disciplines></a><a href="/Discipline/Section/@ViewBag.Discipline">@ViewBag.Discipline></a>
         <a href="/Discipline/Creneau/@ViewBag.Discipline/@ViewBag.SectionId">Creneau</a></span>
 
         <h2>Creneaux de la section @ViewBag.Section.Nom de la discipline @ViewBag.Discipline</h2>
 
+        <!--affiche un message a l'adherent connecte s'il est deja inscrit a un des creneaux-->
         @if (ViewBag.dossier != null)
         {
         <div class="btn-danger">Vous étes déja inscrit à un des créneaux de cette section </div>
@@ -28,14 +30,18 @@
                 <th>Places maximum &nbsp &nbsp</th>
 
             </tr>
+            <!-- parcours tous les creneaux recuperes et affiche les informations qu'ils contiennent-->
             @foreach (var creneau in ViewBag.Creneaux as List<SportAsso.Models.Creneau>)
             {
 
+                <!--pour chaque creneau va rechercher les infos concernant le lieu ou il prend place et l'encadrant qui s'en occupe-->
                 using (var context = new SportAsso.Models.Context_db())
                 {
+                    <!--recupere l'encadrant -->
                     var encadrant = context.Personne
                         .Where(p => p.Id_Personne == creneau.Encadrant)
                         .FirstOrDefault();
+                    <!--recupere le lieu-->
                     var lieu = context.Lieu
                         .Where(l => l.Id_Lieu == creneau.Lieu_Id_Lieu)
                         .FirstOrDefault();
@@ -51,14 +57,17 @@
                     <td>@creneau.Nombre_Places_Dispo &nbsp &nbsp</td>
                     <td>@creneau.Nombre_Places_Max &nbsp &nbsp</td>
 
+                    <!--si l'utilisateur est connecte (adherent) et s'il n'a pas deja un dossier d'inscription pour un des creneaux-->
                     @if (Session["P_id"] != null && ViewBag.dossier == null)
                     {
+                        //si le nombre de place vaut 0 affiche le creneau comme complet
                         if (creneau.Nombre_Places_Dispo == 0)
                         {
                             <td>Nombre de place complet</td>
                         } else
                         {
                             <td>
+                                <!--sinon permet a l'adherent de s'inscrire-->
                                 <a href="/InscriptionCreneau/Index/@creneau.Id_Creneau">
                                     <input type="submit" value="S'inscrire" />
                                 </a>

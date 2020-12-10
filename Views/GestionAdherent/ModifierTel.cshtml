@@ -4,18 +4,22 @@
 @{
     ViewBag.Title = "ModifierTel";
 }
-
+<!--vue affichant une page permettant a l'addherent de modifier son numero de telephone-->
 <div>
+    <!--fomrulaire recuperant le nouveau numero de telephone et l'envoyant au controller pour qu'il traite les donnes-->
     <form method="post" action="/GestionA/ModifierTel">
         <fieldset>
             <legend>Modification votre numéro de téléphone:</legend>
             <p>
+                <!--saisie du numero de telephone-->
                 <label>Votre nouveau numéro :</label>
                 <input name="nouveau" type="text" />
             </p>
             <p>
+                <!--confirmation du numero d etelephone pour s'assurer qu'il n'y a pas eu d'erreur de saisie-->
                 <label>Confirmer votre nouveau numéro : </label>
                 <input name="nouveauConf" type="text" />
+                <!--en cas d'erreur de saisie le controller renvoi sur la page et un message d'erreur est affiche-->
                 @if (ViewBag.Nouveau != null)
                 {
                     @ViewBag.Nouveau

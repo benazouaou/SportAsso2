@@ -2,14 +2,17 @@
 @{
     ViewBag.Title = "Index";
 }
-
+<!--vue qui affiche toutes les disciplines existantes-->
 <div class="row">
     <div class="col-md-12">
+        <!--arbre de navigation permettant de remonter dans les pages qui ont conduit a celle ci (discipline)-->
         <span><a href="/">home></a><a href="/Discipline">Disciplines></a></span>
 
 
         <h2>Disciplines</h2>
         <ul>
+            <!--pour chaque discipline trouvée affiche son nom dans une liste sous forme de lien cliquable pour se rendre sur la page de cette discipline 
+                (contiendra la liste des sections qu'elle possede)-->
             @foreach (var discipline in ViewBag.Disciplines as List<SportAsso.Models.Discipline>)
             {
                 <li><a href="/Discipline/Section/@discipline.Nom_Discipline">@discipline.Nom_Discipline</a></li>
