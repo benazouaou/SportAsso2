@@ -82,11 +82,12 @@ namespace SportAsso.Controllers
 
                 if (Pl.Role.Any(s => s.Nom_Role == "Admin"))
                 {
+                    Session["Admin"] = true;
                     return Redirect("/Admin/Index");
-
                 }
                 else
                 {
+
                     return RedirectToAction("UserPannel");
 
                 }

@@ -1,156 +1,164 @@
 ﻿@model SportAsso.Models.Document
-
+<!--cette vue est emboitee dans un layout qui contient la barre de navigation de l'espace admin
+lui meme imbrique dans le layout general du site-->
 @{
 
     Layout = "~/Views/Shared/LayoutAdminPannel.cshtml";
 }
 <!--vue permettant a un admin de voir tout le contenu d'un dossier-->
 <h3>Detail pré-inscription </h3>
-    <h4>
-        @ViewBag.personneNom @ViewBag.personnePrenom: @ViewBag.discipline, @ViewBag.section, @ViewBag.jour @ViewBag.heure
-    </h4>
-        <table class="table">
-           
-            <tr>
+<h4>
+    @ViewBag.personneNom @ViewBag.personnePrenom: @ViewBag.discipline, @ViewBag.section, @ViewBag.jour @ViewBag.heure
+</h4>
+<table class="table">
+    <tr>
+        <td>Fiche de renseignement : &nbsp &nbsp</td>
+        <!--si le document existe et est valide-->
+        @if (ViewBag.Renseignement != null)
+        {
+            //si le document n'est pas encore valide
+            if (ViewBag.FichValide == 0)
+            {
+                <td>
+                    <!--formulaire envoyant a la methode permettant de charger un document l'id du document a renvoyer-->
+                    <form method="post" action="/Admin/Visualiser">
+                        <input type="hidden" value="@ViewBag.FichID" name="id" />
+                        <input type="submit" value="Visualiser" />
+                    </form>
+                </td>
+                <td>
+                    <!--formulaire evoyant a la methode permettant de valider un document l'id du document a valider-->
+                    <form action="/Admin/ValiderDoc" method="post">
+                        <input type="hidden" value="@ViewBag.FichID" name="id" />
+                        <input class="btn-success" type="submit" value="Valider" />
+                    </form>
+                </td>
+                <td>
+                    <!--formulaire envoyant a la methode permettant de refuser (supprimer) un document l'id du document a supprimer-->
+                    <form action="/Admin/RefuserDoc" method="post">
+                        <input type="hidden" value="@ViewBag.FichID" name="id" />
+                        <input class="btn-danger" type="submit" value="Refuser" />
+                    </form>
+                </td>
+            }
+            else
+            {
+                //le document a deja ete valide
+                <td> Document déjà validé </td>
+                <!--initialise un attribut de viebag a true pour noter que ce document est valide-->
+                ViewBag.Un = true;
+            }
+        }
+        else
+        {
+            <!--le document n'a pas encore ete fourni par l'adherent-->
+            <td>
+                Document pas encore fourni
+            </td>
+        }
+    </tr>
+    <tr>
+        <td>Attestation medicale : &nbsp &nbsp</td>
+        <!--si le document existe et est valide-->
+        @if (ViewBag.Certificat != null)
+        {
+            //si le document n'est pas encore valide
+            if (ViewBag.MedValide == 0)
+            {
+                <td>
+                    <!--formulaire envoyant a la methode permettant de charger un document l'id du document a renvoyer-->
+                    <form method="post" action="/Admin/Visualiser">
+                        <input type="hidden" value="@ViewBag.MedID" name="id" />
+                        <input type="submit" value="Visualiser" />
+                    </form>
+                </td>
+                <td>
+                    <!--formulaire evoyant a la methode permettant de valider un document l'id du document a valider-->
+                    <form action="/Admin/ValiderDoc" method="post">
+                        <input type="hidden" value="@ViewBag.MedID" name="id" />
+                        <input class="btn-success" type="submit" value="Valider" />
+                    </form>
+                </td>
+                <td>
+                    <!--formulaire envoyant a la methode permettant de refuser (supprimer) un document l'id du document a supprimer-->
+                    <form action="/Admin/RefuserDoc" method="post">
+                        <input type="hidden" value="@ViewBag.MedID" name="id" />
+                        <input class="btn-danger" type="submit" value="Refuser" />
+                    </form>
+                </td>
+            }
+            else
+            {
+                <!--le document a deja ete valide-->
+                <td> Document déjà validé</td>
+                <!--initialise un attribut de viebag a true pour noter que ce document est valide-->
+                ViewBag.Deux = true;
+            }
 
-                <td>Fiche de renseignement : &nbsp &nbsp</td>
-                <!--si le document existe et est valide-->
-                @if (ViewBag.Renseignement != null)
-                 {
-                    if (ViewBag.FichValide == 0)
-                    {
-                        <td>
-                            <form method="post" action="/Admin/Visualiser">
-                                <input type="hidden" value="@ViewBag.FichID" name="id" />
-                                <input type="submit" value="Visualiser" />
-                            </form>
-                        </td>
-                        <td>
-                            <form action="/Admin/ValiderDoc" method="post">
-                                <input type="hidden" value="@ViewBag.FichID" name="id" />
-                                <input class="btn-success" type="submit" value="Valider" />
-                            </form>
-                        </td>
-                        <td>
-                            <form action="/Admin/RefuserDoc" method="post">
-                                <input type="hidden" value="@ViewBag.FichID" name="id" />
-                                <input class="btn-danger" type="submit" value="Refuser" />
-                            </form>
-                        </td>
-                    }
-                    else
-                    {
-                        //le document a deja ete valide
-                        <td> Document déjà validé </td>
-                        ViewBag.Un = true;
-                    }
+        }
+        else
+        {
+            <!--si le document n'a pas encore ete fourni par l'adherent-->
+            <td> Document pas encore fourni </td>
+        }
+    </tr>
+    <tr>
+        <td>Assurance de responsabilité civile : &nbsp &nbsp</td>
+        <!--si le document existe et est valide-->
+        @if (ViewBag.Assurance != null)
+        {
+            //si le document n'est pas encore valide
+            if (ViewBag.docValider == 0)
+            {
+                <td>
+                    <!--formulaire envoyant a la methode permettant de charger un document l'id du document a renvoyer-->
+                    <form method="post" action="/Admin/Visualiser">
+                        <input type="hidden" value="@ViewBag.ResID" name="id" />
+                        <input type="submit" value="Visualiser" />
+                    </form>
+                </td>
+                <td>
+                    <!--formulaire evoyant a la methode permettant de valider un document l'id du document a valider-->
+                    <form action="/Admin/ValiderDoc" method="post">
+                        <input type="hidden" value="@ViewBag.ResID" name="id" />
+                        <input class="btn-success" type="submit" value="Valider" />
+                    </form>
+                </td>
+                <td>
+                    <!--formulaire envoyant a la methode permettant de refuser (supprimer) un document l'id du document a supprimer-->
+                    <form action="/Admin/RefuserDoc" method="post">
+                        <input type="hidden" value="@ViewBag.ResID" name="id" />
+                        <input class="btn-danger" type="submit" value="Refuser" />
+                    </form>
 
-                }
-                else
-                {
-                    <!--si le document n'a pas encore ete fourni par l'adherent-->
-                    <td>
-                        Document pas encore fourni
-                    </td>
-                }
+                </td>
+            }
+            else
+            {
+                <!--le document a deja ete valide-->
+                <td> Document déjà validé </td>
+                <!--initialise un attribut de viebag a true pour noter que ce document est valide-->
+                ViewBag.Trois = true;
+            }
+        }
+        else
+        {
+            <!--si le document n'a pas encore ete fourni par l'adherent-->
+            <td>
+                Document pas encore fourni
+            </td>
+        }
+    </tr>
+</table>
 
-            </tr>
-            <tr>
-
-                <td>Attestation medicale : &nbsp &nbsp</td>
-                <!--si le document existe et est valide-->
-                @if (ViewBag.Certificat != null)
-                {
-
-                    if (ViewBag.MedValide == 0)
-                    {
-                        <td>
-                            <form method="post" action="/Admin/Visualiser">
-                                <input type="hidden" value="@ViewBag.MedID" name="id" />
-                                <input type="submit" value="Visualiser" />
-                            </form>
-                        </td>
-                        <td>
-                            <form action="/Admin/ValiderDoc" method="post">
-                                <input type="hidden" value="@ViewBag.MedID" name="id" />
-                                <input class="btn-success" type="submit" value="Valider" />
-                            </form>
-                        </td>
-                        <td>
-                            <form action="/Admin/RefuserDoc" method="post">
-                                <input type="hidden" value="@ViewBag.MedID" name="id" />
-                                <input class="btn-danger" type="submit" value="Refuser" />
-                            </form>
-                        </td>
-                    }
-                    else
-                    {
-                        <td> Document déjà validé</td>
-                        ViewBag.Deux = true;
-                    }
-
-                }
-                else
-                {
-                    <td> Document pas encore fourni </td>
-                }
-
-            </tr>
-            <tr>
-
-                <td>Assurance de responsabilité civile : &nbsp &nbsp</td>
-                <!--si le document existe et est valide-->
-                @if (ViewBag.Assurance != null)
-                {
-                    if (ViewBag.docValider == 0)
-                    {
-                        <td>
-                            
-                                <form method="post" action="/Admin/Visualiser">
-                                    <input type="hidden" value="@ViewBag.ResID" name="id" />
-                                    <input type="submit" value="Visualiser" />
-                                </form>
-                        </td>
-                        <td>
-                                <form action="/Admin/ValiderDoc" method="post">
-                                    <input type="hidden" value="@ViewBag.ResID" name="id" />
-                                    <input class="btn-success" type="submit" value="Valider" />
-                                </form>
-                        </td>
-                        <td>
-                                <form action="/Admin/RefuserDoc" method="post">
-                                    <input type="hidden" value="@ViewBag.ResID" name="id" />
-                                    <input class="btn-danger" type="submit" value="Refuser" />
-                                </form>
-                            
-                        </td>
-                    }
-                    else
-                    {
-                        <td> Document déjà validé </td>
-                        ViewBag.Trois = true;
-                    }
-
-
-                }
-                else
-                {
-                    <!--si le document n'a pas encore ete fourni par l'adherent-->
-                    <td>
-                        Document pas encore fourni
-                    </td>
-                }
-
-
-            </tr>
-        </table>
-    
 <div>
-    @if(ViewBag.Un != null && ViewBag.Deux != null && ViewBag.Trois != null)
+    <!--si les trois documents ont ete valides-->
+    @if (ViewBag.Un != null && ViewBag.Deux != null && ViewBag.Trois != null)
     {
+        <!--formulaire envoyant a la methode permettant de valider un dossier l'id du dossier a valider-->
         <form action="/Admin/ValiderDossier" method="post">
-            <input type="hidden" value="@ViewBag.DossierId" name="id"/>
-            <input type="submit" value="Valider le Dossier"/>
+            <input type="hidden" value="@ViewBag.DossierId" name="id" />
+            <input type="submit" value="Valider le Dossier" />
         </form>
     }
 </div>
