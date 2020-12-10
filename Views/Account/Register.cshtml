@@ -58,6 +58,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Sexe, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
+            <!--liste deroulante l'utilisateur doit choisir parmi les options proposees-->
             @Html.DropDownListFor(x => x.Sexe, ViewBag.list as SelectList, "-- Select --", new { @class = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Sexe, "", new { @class = "text-danger" })
         </div>

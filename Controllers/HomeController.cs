@@ -10,27 +10,13 @@ namespace SportAsso.Controllers
     {
         public ActionResult Index()
         {
-            return View();
-        }
-
-        public ActionResult Disciplines()
-        {
-            ViewBag.Message = "disciplines.";
-
-            return View();
-        }
-
-        public ActionResult Encadrants()
-        {
-            ViewBag.Message = "Encadrant.";
-
+            //retourne la vue de la page d'accueil du site
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Encadrant.";
-
+            //retourne la vue de la page contact du site
             return View();
         }
     }
