@@ -2,14 +2,17 @@
 @{
     ViewBag.Title = "Index";
 }
-
+<!--vue affichant la liste des encadrants sous forme de liste-->
 <div class="row">
     <div class="col-md-12">
+        <!--arbre de navigation permettant de remonter dans les pages qui ont conduit a celle ci (page d'accueil)-->
         <span><a href="/">home></a><a href="/Encadrant">Encadrants></a></span>
 
 
         <h2>Encadrants</h2>
         <ul>
+            <!--parcours tous les encadrants fournis par le controller et les affiche sous forme de lien cliquable
+                redirigeant vers la page fournissant tous les creenaux et l'email de l'encadrant choisi-->
             @foreach (var encadrant in ViewBag.Encadrants as List<SportAsso.Models.Personne>)
             {
                 <li><a href="/Encadrant/Creneaux/@encadrant.Id_Personne">@encadrant.Nom @encadrant.Prenom </a></li>

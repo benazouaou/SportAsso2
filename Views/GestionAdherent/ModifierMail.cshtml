@@ -4,16 +4,19 @@
 @{
     ViewBag.Title = "ModifierMail";
 }
-
+<!--vue affichant la page permettant a l'adherant de saisir une nouvelle adresse mail-->
 <div>
+    <!--formulaire permettant de saisir l'adresse mail et d'envoyer les donnes a une methode pour qu'elle les verifie et enregistre les modifications-->
     <form method="post" action="/GestionA/ModifierMail">
         <fieldset>
             <legend>Modification de votre adresse mail:</legend>
             <p>
+                <!-- champ de saisie de la nouvelle adresse mail-->
                 <label>Votre nouvelle adresse :</label>
                 <input name="nouveau" type="text" />
             </p>
             <p>
+                <!-- champ de confirmation pour s'assurer que l'utilisateur n'a pas fait d'erreur de saisie-->
                 <label>Confirmer votre nouvelle adresse : </label>
                 <input name="nouveauConf" type="text" />
                 @if (ViewBag.Nouveau != null)

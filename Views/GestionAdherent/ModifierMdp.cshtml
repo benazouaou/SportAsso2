@@ -5,29 +5,32 @@
 @{
     ViewBag.Title = "ModifierMdp";
 }
-
-
-
-
+<!--vue affichant la page permettant a l'adherant de modifier son mot de passe-->
 <div>
+    <!--formulaire permettant de saisir son ancien mot de passe puis de saisir le nouveau avant d'envoyer les donnees au controller-->
     <form method="post" action="/GestionA/ModifierMdp">
         <fieldset>
             <legend>Modification de votre mot de passe :</legend>
             <p>
+                <!--champ pour saisir son ancien mot de passe pour le verifier (pour plus de securite)-->
                 <label>Votre ancien mot de passe :</label>
                 <input name="ancien" type="password" />
-                @if(ViewBag.Ancien != null)
+                <!--en cas d'erreur de la saisie de l'ancien mot de passe le controller renvoi sur la page et un message d'erreur est affiche-->
+                @if (ViewBag.Ancien != null)
                 {
                     @ViewBag.Ancien
                 }
             </p>
             <p>
+                <!--champ pour saisir son nouveau mot de passe-->
                 <label>Votre nouveau mot de passe :</label>
                 <input name="nouveau" type="password" />
             </p>
             <p>
+                <!--champ de confirmation du nouveau mot de passe pour s'assurer que l'adherent n'a pas fait d'erreur de saisie-->
                 <label>Confirmer votre nouveau mot de passe : </label>
                 <input name="nouveauConf" type="password" />
+                <!--en cas d'erreur de la saisie du nouveau mot de passe le controller renvoi sur la page et un message d'erreur est affiche-->
                 @if (ViewBag.Nouveau != null)
                 {
                     @ViewBag.Nouveau
@@ -38,7 +41,4 @@
             </p>
         </fieldset>
     </form>
-
-
-
 </div>

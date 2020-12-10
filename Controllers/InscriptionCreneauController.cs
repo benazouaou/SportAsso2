@@ -47,24 +47,6 @@ namespace SportAsso.Controllers
             return View();
         }
 
-      
-       
-
-            public ActionResult Confirmation( string id, string id2)
-            {
-                ViewBag.Discipline = id;
-                ViewBag.Section = id2;
-
-                
-
-            return View();
-
-            }
-
-
-       
-
-
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken] // permet d'empêcher les attaques de falsification de requêtes intersites
@@ -76,6 +58,17 @@ namespace SportAsso.Controllers
              d.Paiement = 1;
              context.Dossier.Add(d);
              context.SaveChanges();
+
+            //recupere la section et la discipline pour les envoyer a la page de confirmation
+            Section section = context.Section
+                .Where(s => s.Id_Section == d.Section_Id_Section)
+                .FirstOrDefault();
+            ViewBag.Section = section;
+
+            Discipline discipline = context.Discipline
+                .Where(dos => dos.Id_Discipline == section.Discipline_Id_Discipline)
+                .FirstOrDefault();
+            ViewBag.Discipline = discipline;
 
             for (int i = 0; i < 3; i++)
             {
