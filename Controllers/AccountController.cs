@@ -73,12 +73,25 @@ namespace SportAsso.Controllers
         public ActionResult Login(Personne p)
         {
             Personne Pl = db.Personne.Where(x => x.E_mail == p.E_mail && x.Mot_de_Passe == p.Mot_de_Passe).SingleOrDefault();
+            Role rA = db.Role.Where(x => x.Nom_Role == "Admin").SingleOrDefault();
+            
             if (Pl != null)
             {
-
                 Session["P_id"] = Pl.Id_Personne;
                 Session["nom"] = Pl.Nom;
-                return RedirectToAction("UserPannel");
+
+                if (Pl.Role.Any(s => s.Nom_Role == "Admin"))
+                {
+                    return Redirect("/Admin/Index");
+
+                }
+                else
+                {
+                    return RedirectToAction("UserPannel");
+
+                }
+                
+                
             }
             else
             {

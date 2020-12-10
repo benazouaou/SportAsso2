@@ -1,0 +1,135 @@
+﻿@model SportAsso.Models.Document
+
+@{
+
+    Layout = "~/Views/Shared/LayoutAdminPannel.cshtml";
+}
+
+<h3>Detail pré-inscription </h3>
+
+
+    <h4>
+        @ViewBag.personneNom @ViewBag.personnePrenom: @ViewBag.discipline, @ViewBag.section, @ViewBag.jour @ViewBag.heure
+    </h4>
+   
+
+
+    
+
+        <table class="table">
+           
+            <tr>
+
+                <td>Fiche de renseignement : &nbsp &nbsp</td>
+                <!--si le document existe et est valide-->
+                @if (ViewBag.Renseignement != null)
+                {
+                    if (ViewBag.FichValide == 0)
+                    {
+            <td>
+                <form>
+                    <input type="submit" value="Visualiser" />
+                </form>
+
+                <form action="/Admin/ValiderDoc" method="post">
+                    <input type="hidden" value="@ViewBag.FichID" name="id" />
+                    <input class="btn-success" type="submit" value="Valider" />
+                </form>
+                <form>
+                    <input class="btn-danger" type="submit" value="Refuser" />
+                </form>
+            </td>
+
+                    }
+                    else
+                    {
+                        <td> Document déja valider </td>
+                    }
+
+                }
+                else
+                {
+                    <!--si le document n'a pas encore ete fourni par l'adherent-->
+                    <td>
+                        Document non fourni
+                    </td>
+                }
+
+            </tr>
+            <tr>
+
+                <td>Attestation medicale : &nbsp &nbsp</td>
+                <!--si le document existe et est valide-->
+                @if (ViewBag.Certificat != null)
+                {
+
+                    if (ViewBag.MedValide == 0)
+                    {
+            <td>
+                <form>
+                    <input type="submit" value="Visualiser" />
+                </form>
+
+                <form action="/Admin/ValiderDoc" method="post">
+                    <input type="hidden" value="@ViewBag.MedID" name="id" />
+                    <input class="btn-success" type="submit" value="Valider" />
+                </form>
+                <form>
+                    <input class="btn-danger" type="submit" value="Refuser" />
+                </form>
+            </td>
+                    }
+                    else
+                    {
+                        <td> Document déja validé</td>  
+                    }
+
+                }
+                else
+                {
+                    <td> Document non fourni </td>
+                }  
+
+            </tr>
+            <tr>
+
+                <td>Assurance de responsabilité civile : &nbsp &nbsp</td>
+                <!--si le document existe et est valide-->
+                @if (ViewBag.Assurance != null)
+                {
+                    if (ViewBag.docValider == 0)
+                    {
+                        <td>
+                            <form>
+                                <input type="submit" value="Visualiser" />
+                            </form>
+                        
+                            <form action="/Admin/ValiderDoc" method="post">
+                                <input type="hidden" value="@ViewBag.ResID" name="id" /> 
+                                <input class="btn-success" type="submit" value="Valider" />
+                            </form>
+                           <form>  
+                            <input class="btn-danger" type="submit" value="Refuser" />
+                               </form> 
+                        </td>
+
+                    }
+                    else
+                    {
+                        <td> Document déja valider </td>
+                    }
+
+
+                }
+                else
+                {
+                    <!--si le document n'a pas encore ete fourni par l'adherent-->
+                    <td>
+                        Document non fourni
+                    </td>
+                }
+
+               
+            </tr>
+        </table>
+    
