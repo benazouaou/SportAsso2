@@ -1,0 +1,75 @@
+﻿@model IEnumerable<SportAsso.Models.Dossier>
+
+@{
+
+    Layout = "~/Views/Shared/LayoutAdminPannel.cshtml";
+
+}
+
+<h2>Inscription</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Inscrit
+        </th>
+        <th>
+            Discipline
+        </th>
+        <th>
+            Section
+        </th>
+        <th>Créneau</th>
+        <th></th>
+    </tr>
+
+@foreach (var dossier in ViewBag.DossiersPre as List<SportAsso.Models.Dossier>) {
+
+
+    using (var context = new SportAsso.Models.Context_db())
+    {
+
+        var personne = context.Personne.Where(p => p.Id_Personne == dossier.Personne_Id_Personne).FirstOrDefault();
+        ViewBag.personneNom = personne.Nom;
+        ViewBag.personnePrenom = personne.Prenom;
+
+
+
+        var section = context.Section.Where(s => s.Id_Section == dossier.Section_Id_Section).FirstOrDefault();
+        ViewBag.section = section.Nom;
+
+        var discipline = context.Discipline.Where(d => d.Id_Discipline == section.Discipline_Id_Discipline).FirstOrDefault();
+        ViewBag.discipline = discipline.Nom_Discipline;
+
+
+
+
+        var cr = context.Creneau.Where(c => c.Section_Id_Section == section.Id_Section && (c.Personne1.Any(s => s.Id_Personne == personne.Id_Personne))).SingleOrDefault();
+        ViewBag.jour = cr.Jour;
+        ViewBag.heure = cr.Heure;
+
+
+    }
+    <tr>
+        <td>
+            @ViewBag.personneNom @ViewBag.personnePrenom
+        </td>
+        <td>
+            @ViewBag.discipline
+        </td>
+        <td>
+            @ViewBag.section
+        </td>
+        <td>
+            @ViewBag.jour @ViewBag.heure
+        </td>
+        <td>
+            
+            @Html.ActionLink("Detail", "DetailInscription", new { id= dossier.Id_Dossier }) |
+            
+        </td>
+    </tr>
+}
+
+</table>

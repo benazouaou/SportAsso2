@@ -1,0 +1,120 @@
+﻿
+@{
+    Layout = "_Layout.cshtml";
+}
+<!DOCTYPE html>
+<head>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    @using (var context = new SportAsso.Models.Context_db())
+    {
+
+        List<SportAsso.Models.Discipline> disciplines = context.Discipline.ToList();
+        ViewBag.disciplines = disciplines;
+
+
+        //----------
+        // affichage des pré-inscription
+        List<SportAsso.Models.Dossier> dossierPre = context.Dossier.Where(d => d.Est_Valide == false).ToList();
+        ViewBag.DossiersPre = dossierPre;
+
+
+        // affichage des pré-inscription
+        List<SportAsso.Models.Dossier> dossierInsc = context.Dossier.Where(d => d.Est_Valide == true).ToList();
+        ViewBag.DossiersInsc = dossierInsc;
+
+
+
+    }
+
+
+    <br />
+    <h3>Espace administrateur </h3>
+    <nav class="nav  flex-column" style="width:190px; padding:15px; background-color:lightgray; float:left; margin-right:30px" ">
+
+        <!--responsive
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#responsive">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+        -->
+        <!-- les liens du menu-->
+        <div class="navbar">
+            <div>
+                <a role="button" href="/Admin/Index">Les infos personnelles</a>
+            </div>
+
+
+
+            <!--Les Disciplines-->
+            <div class="dropdown">
+                <a class="dropdown-toggle" role="button" id="deroulanta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Disciplines</a>
+                <div class="dropdown-menu" style="background-color:lightgray" aria-labelledby="deroulanta">
+                    <ul>
+                        <li>Nouvelles discipline </li>
+                        @{
+                            foreach (var discipline in ViewBag.disciplines as List<SportAsso.Models.Discipline>)
+                            {
+                                <li>
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" role="button" id="deroulanta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@discipline.Nom_Discipline</a>
+                                        <div class="dropdown-submenu" style="background-color:lightgray" aria-labelledby="deroulanta">
+                                            <ul>
+                                                <li>Nouvelles section </li>
+                                                @using (var context = new SportAsso.Models.Context_db())
+                                                {
+                                                    var sections = context.Section
+                                                    .Where(s => s.Discipline_Id_Discipline == discipline.Id_Discipline).ToList();
+                                                    ViewBag.section = sections;
+
+                                                    foreach (var section in ViewBag.section as List<SportAsso.Models.Section>)
+                                                    {
+                                                        ViewBag.sectionNom = section.Nom;
+                                                        ViewBag.sectionId = section.Id_Section;
+
+                                                        <li class="dropdown-submenu">
+                                                            <a class="dropdown-item" href="/Discipline/Creneau/@discipline.Nom_Discipline/@ViewBag.sectionId">@ViewBag.sectionNom</a>
+                                                        </li>
+                                                    }
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+            <!--Les pré inscriptions-->
+            <div class="dropright">
+                <a href="/Admin/Preinscription">Les pré inscriptions</a>
+            </div>
+            <!--Les inscriptions-->
+
+            <div class="dropright">
+                <a href="/Admin/Inscription">Les inscriptions</a>
+            </div>
+
+    </nav>
+    @RenderBody()
+
+</body>
+
+
+

@@ -1,12 +1,12 @@
+﻿
+@{
 
-﻿@{
-    <!--cette vue est emboitee dans un layout qui contient la barre de navigation de l'espace adherent, lui meme imbrique dans le layout general du site-->
-    Layout = "~/Views/Shared/LayoutUserPannel.cshtml";
-    
+    Layout = "~/Views/Shared/LayoutAdminPannel.cshtml";
+
+
 
 }
 
-<!--vue sur laquelle l'adherent peut acceder a ses infos personnelles et les modifer-->
 <h1>Mes informations personnelles</h1>
 
 <table>
@@ -27,7 +27,6 @@
         <td>Email : &nbsp &nbsp</td>
         <td>@ViewBag.Personne.E_mail &nbsp &nbsp</td>
         <td>
-            <!--formulaire sans input qui renvoi vers une page pour saisir sa nouvelle adresse mail-->
             <form action="/GestionA/ModifierMail">
                 <input type="submit" value="Modifer" />
             </form>
@@ -37,7 +36,6 @@
         <td>Numéro de téléphone : &nbsp &nbsp</td>
         <td>@ViewBag.Personne.Num_Telephone &nbsp &nbsp</td>
         <td>
-            <!--formulaire sans input qui renvoi vers une page pour saisir son nouveau numero de telephone-->
             <form action="/GestionA/ModifierTel">
                 <input type="submit" value="Modifer" />
             </form>
@@ -47,7 +45,6 @@
         <td>Mot de passe : &nbsp &nbsp</td>
         <td>******** &nbsp &nbsp</td>
         <td>
-            <!--formulaire sans input qui renvoi vers une page pour saisir son nouveau mot de passe-->
             <form action="/GestionA/ModifierMdp">
                 <input type="submit" value="Modifer" />
             </form>

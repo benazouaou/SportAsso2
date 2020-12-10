@@ -22,29 +22,48 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
 
-                    <li>@Html.ActionLink("Disciplines", "Index", "Discipline")</li>
-                    <li>@Html.ActionLink("Encadrants", "Index", "Encadrant")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
 
 
-
-
-                    @if (Session["P_id"] == null)
+                   
                     {
 
-                        <li>@Html.ActionLink("S'inscrire", "Register", "Account")</li>
-                        <li>@Html.ActionLink("Se Connecter", "Login", "Account")</li>
-
-                    }
-                    else
-                    {
-                       
-                        <li><a href="/Account/UserPannel" class="scroll">@Session["nom"]</a></li>
-                        <li>@Html.ActionLink("Se Déconnecter", "Logout", "Account")</li>
+                        <li>@Html.ActionLink("Disciplines", "Index", "Discipline")</li>
+                        <li>@Html.ActionLink("Encadrants", "Index", "Encadrant")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
 
 
-                    }
-                </ul>
+
+
+                        @if (Session["P_id"] == null)
+                        {
+
+                            <li>@Html.ActionLink("S'inscrire", "Register", "Account")</li>
+                            <li>@Html.ActionLink("Se Connecter", "Login", "Account")</li>
+
+                        }
+                        else
+                        {
+
+
+                            using (var context = new SportAsso.Models.Context_db())
+                            {
+                                int id = (int)Session["P_id"];
+                                SportAsso.Models.Personne Pl = context.Personne.Where(x => x.Id_Personne == id).SingleOrDefault();
+                                if (Pl.Role.Any(s => s.Nom_Role == "Admin"))
+                                {
+                                    <li><a href="/Admin/Index" class="scroll">@Session["nom"]</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="/Account/UserPannel" class="scroll">@Session["nom"]</a></li>
+
+                                }
+
+                            }
+                            <li>@Html.ActionLink("Se Déconnecter", "Logout", "Account")</li>
+
+                        }
+                    </ul>
             </div>
         </div>
     </div>

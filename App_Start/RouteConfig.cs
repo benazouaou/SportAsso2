@@ -35,6 +35,14 @@ namespace SportAsso
                defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
 );
 
+
+            routes.MapRoute(
+               name: "Admin",
+               url: "Admin/{action}/{id}",
+               //id = numéro du dossier en get 
+               defaults: new { controller = "Admin", action = "Index" }
+);
+
             routes.MapRoute(
               name: "GestionA",
               url: "GestionA/{action}/{id}",
