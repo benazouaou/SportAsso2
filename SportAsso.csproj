@@ -228,6 +228,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Inscription.cshtml" />
     <Content Include="Views\Admin\Detail.cshtml" />
+    <Content Include="Views\Admin\DetailInscription.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
